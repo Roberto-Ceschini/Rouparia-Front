@@ -1,31 +1,34 @@
-@font-face{
-    font-family: Roboto-Regular;
-    src: url("/assets/fonts/Roboto-Regular.ttf");
+@font-face {
+    font-family: Poppins-Bold;
+    src: url("/assets/fonts/Poppins-Bold.ttf");
 }
-@font-face{
-    font-family: Roboto-Bold;
-    src: url("/assets/fonts/Roboto-Bold.ttf");
+
+@font-face {
+    font-family: Poppins-SemiBold;
+    src: url("/assets/fonts/Poppins-SemiBold.ttf");
 }
-@font-face{
-    font-family: Roboto-Semibold;
-    src: url("/assets/fonts/Roboto-Semibold.ttf");
+
+@font-face {
+    font-family: Poppins-ExtraBold;
+    src: url("/assets/fonts/Poppins-ExtraBold.ttf");
 }
+
 @font-face{
-    font-family: Doto;
-    src: url("/assets/fonts/Doto-Bold.ttf");
+    font-family: Poppins-Regular;
+    src: url("/assets/fonts/Poppins-Regular.ttf");
 }
 @import "tailwindcss";
 
 @theme{
-
-    --font-roboto-regular: Roboto-Regular, "sans-serif";
-    --font-roboto-bold: Roboto-Bold, "sans-serif";
-    --font-roboto-semiBold: Roboto-Semibold, "sans-serif";
-    --font-doto: Doto, "sans-serif";
+    --font-poppins-bold: Poppins-Bold, "sans-serif";
+    --font-poppins-semi-bold: Poppins-SemiBold, "sans-serif";
+    --font-poppins-extra-bold: Poppins-ExtraBold, "sans-serif";
+    --font-poppins-regular: Poppins-Regular, "sans-serif";
 
     --color-cinza-claro: #FBFBFB;
     --color-verde-primario: #14745A;
-    --color-amarelo: #14745A;
     --color-verde-secundario: #7C9C91;
     --color-verde-terciario: #99CABD;
+    --color-laranja: #F49C1F;
+    --color-laranja-hover: #F7B14C;
 }
