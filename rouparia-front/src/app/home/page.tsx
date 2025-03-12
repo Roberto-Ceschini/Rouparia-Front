@@ -9,6 +9,15 @@ export default function Home(){
 
     const [colaborador, setColaborador] = useState (null)
 
+      const [isErrorVisible, setIsErrorVisible] = useState(true);
+    
+      //Função que mostra o erro e depois de 4 segundos esconde
+      const handleShowError = () => {
+        setTimeout(() => {
+          setIsErrorVisible(prev => !prev);
+        }, 4000);
+      }
+
    return (
    
        <>
@@ -39,10 +48,12 @@ export default function Home(){
                <FormInput
                  name='nColaborador'
                  placeholder='Exemplo: 001'
-                 label='N° do colaborador' />
+                 label='N° do colaborador' 
+                 isErrorVisible={isErrorVisible}
+                 />
               
                {/**Submit*/}
-               <SubmitButton name='Pesquisar' />
+               <SubmitButton name='Pesquisar' setIsErrorVisible={setIsErrorVisible} handleShowError={handleShowError}/>
              </Form>
            </Formik>
          </div>

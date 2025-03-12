@@ -1,5 +1,5 @@
 "use client"
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Formik } from "formik";
 import * as Yup from 'yup';
 import FormInput from '@/components/FormInput';
@@ -8,8 +8,17 @@ import { useRouter } from 'next/navigation'
 
 export default function Home() {
   const router = useRouter()
-  return (
+  
+  const [isErrorVisible, setIsErrorVisible] = useState(true);
 
+  //Função que mostra o erro e depois de 4 segundos esconde
+  const handleShowError = () => {
+    setTimeout(() => {
+      setIsErrorVisible(prev => !prev);
+    }, 4000);
+  }
+
+  return (
     <>
     {/**Background Verde*/}
     <div className="flex w-[100vw] h-[100vh] bg-verde-primario justify-center items-center md:w-[50vw]">
@@ -42,14 +51,18 @@ export default function Home() {
             <FormInput
               name='email'
               placeholder='rouparia@gmail.com'
-              label='Email' />
+              label='Email' 
+              isErrorVisible={isErrorVisible}
+              />
             {/**Senha*/}
             <FormInput
               name='password'
               placeholder='********'
-              label='Senha' />
+              label='Senha'
+              isErrorVisible={isErrorVisible} 
+              />
             {/**Submit*/}
-           <SubmitButton name='Login' />
+           <SubmitButton name='Login' setIsErrorVisible={setIsErrorVisible} handleShowError ={handleShowError} />
           </Form>
         </Formik>
       </div>
