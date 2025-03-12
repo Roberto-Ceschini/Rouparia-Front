@@ -1,18 +1,18 @@
 @font-face{
-    font-family: Roboto-Regular;
-    src: url("/assets/fonts/Roboto-Regular.ttf");
+    font-family: Poppins-Regular;
+    src: url("/assets/fonts/Poppins-Regular.ttf");
 }
 @font-face{
-    font-family: Roboto-Bold;
-    src: url("/assets/fonts/Roboto-Bold.ttf");
+    font-family: Poppins-Bold;
+    src: url("/assets/fonts/Poppins-Bold.ttf");
 }
 @font-face{
-    font-family: Roboto-Semibold;
-    src: url("/assets/fonts/Roboto-Semibold.ttf");
+    font-family: Poppins-SemiBold;
+    src: url("/assets/fonts/Poppins-SemiBold.ttf");
 }
 @font-face{
-    font-family: Doto;
-    src: url("/assets/fonts/Doto-Bold.ttf");
+    font-family: Poppins-ExtraBold;
+    src: url("/assets/fonts/Poppins-ExtraBold.ttf");
 }
 @import "tailwindcss";
 
