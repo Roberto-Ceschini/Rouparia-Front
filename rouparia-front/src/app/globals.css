@@ -17,11 +17,9 @@
 @import "tailwindcss";
 
 @theme{
-
-    --font-roboto-regular: Roboto-Regular, "sans-serif";
-    --font-roboto-bold: Roboto-Bold, "sans-serif";
-    --font-roboto-semiBold: Roboto-Semibold, "sans-serif";
-    --font-doto: Doto, "sans-serif";
+    --font-poppins-regular: Poppins-Regular, "sans-serif";
+    --font-poppins-bold: Poppins-Bold, "sans-serif";
+    --font-poppins-semiBold: Poppins-SemiBold, "sans-serif";
 
     --color-cinza-claro: #FBFBFB;
     --color-verde-primario: #14745A;
