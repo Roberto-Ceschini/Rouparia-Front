@@ -2,15 +2,30 @@
 import CardColaborador from "@/components/CardColaborador";
 import FormInput from "@/components/FormInput";
 import SubmitButton from "@/components/SubmitButton";
+import { Colaborador } from "@/types/colaborador";
 import { Form, Formik } from "formik";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import * as Yup from 'yup';
 
 export default function Home() {
 
-  const [colaborador, setColaborador] = useState("pinto");//Estado que controla o colaborador
+  const [colaborador, setColaborador] = useState<Colaborador | null>(null);//Estado que controla o colaborador
 
   const [isErrorVisible, setIsErrorVisible] = useState(true);//Estado que controla a visibilidade do erro
+
+  useEffect(() => {
+    setColaborador({
+      id: 1,
+      nome: 'Paloma S. Santana',
+      numero: 1,
+      area_id: 1,
+      registros: [
+        { id: 1, data: "2024-03-12", status: "Ativo", colaborador_id: 1, colaborador: { id: 1, numero: 1, nome: "João", area_id: 2, registros: [] } },  
+  { id: 2, data: "2024-03-12", status: "Inativo", colaborador_id: 2, colaborador: { id: 2, numero: 2, nome: "Maria", area_id: 3, registros: [] } },  
+  { id: 3, data: "2024-03-12", status: "Ativo", colaborador_id: 1, colaborador: { id: 1, numero: 1, nome: "João", area_id: 2, registros: [] } },  
+      ]
+    });
+  }, []);
 
   //Função que mostra o erro e depois de 4 segundos esconde
   const handleShowError = () => {
@@ -24,6 +39,8 @@ export default function Home() {
     <div className="flex flex-col md:flex-row">
       {/**Background Verde*/}
       <div className="flex w-[100vw] h-[100vh] bg-verde-primario justify-center items-center md:w-[50vw]">
+        {!colaborador ? (
+        <>
         {/**Caixa Formulario*/}
         <div className="flex flex-col p-2 justify-evenly w-[80%] h-[50%] bg-verde-terciario rounded-xl md:w-[60%] lg:px-16 lg:py-20">
           {/**Texto Login*/}
@@ -57,11 +74,13 @@ export default function Home() {
               <SubmitButton name='Pesquisar' setIsErrorVisible={setIsErrorVisible} handleShowError={handleShowError} />
             </Form>
           </Formik>
-        </div>
+        </div></>
+        ) : (<CardColaborador colaborador={colaborador}/>)}
       </div>
+
       {/**Background Branco*/}
-      <div className="hidden md:flex w-[50vw] h-[100vh] bg-white justify-center items-center">
-          <p>Pinto</p>
+      <div className="hidden md:flex w-[50vw] h-[100vh] justify-center items-center">
+      {colaborador && <CardColaborador colaborador={colaborador}/>}
       </div>
       </div>
   );
