@@ -9,7 +9,8 @@ interface CardColaboradorProps {
     colaborador: Colaborador | null;
     setColaborador: (value: Colaborador | null) => void;
     setMostrarPopUpNaoAutorizado: (value: boolean) => void;
-
+    setBotaoClicado: (value: string) => void;
+    setMostrarPopUpSucesso: (value: boolean) => void;
 }
 
 //Função que capitaliza a primeira letra de uma string
@@ -18,7 +19,7 @@ const capitalize = (s: string) => {
   return s.charAt(0).toUpperCase() + s.slice(1)
 }
 
-export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutorizado, setColaborador }: CardColaboradorProps) {
+export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutorizado, setColaborador, setBotaoClicado, setMostrarPopUpSucesso }: CardColaboradorProps) {
 
     //Pega o último registro do colaborador
     const lastRegistro = colaborador?.registros?.length ? colaborador.registros[colaborador.registros.length - 1] : null;
@@ -29,7 +30,7 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
 
     //Formata a data, transforma a data para mostrar a hora e o dia locais (Brasília)
     const formatData = (data: string) => {
-        const dataLocal = new Date(data).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });;
+        const dataLocal = new Date(data).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
         const dataSplit = dataLocal.split('-');
         return `${dataSplit}`;
     }
@@ -37,11 +38,19 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
     const entregar = async () => {
         try {
             console.log('entregou');
+            setBotaoClicado('entregar');
             setSubmitting(true);
             const response = await api.post('/registro', {
                 colaborador_id: colaborador?.id,
                 status: 'entregou'
             });
+            if (response.data.message === 'error'){
+                setSubmitting(false);
+                setMostrarPopUpNaoAutorizado(true);
+            }else{
+                setSubmitting(false);
+                setMostrarPopUpSucesso(true);
+            }
             console.log(response);
             setSubmitting(false);
         } catch (error) {
@@ -52,6 +61,7 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
 
     const retirar = async () => {
         try {
+            setBotaoClicado('retirar');
             setSubmitting(true);
             const response = await api.post('/registro', {
                 colaborador_id: colaborador?.id,
@@ -59,9 +69,12 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
             });
             console.log(response.data);
             if (response.data.message === 'error'){
+                setSubmitting(false);
                 setMostrarPopUpNaoAutorizado(true);
+            }else{
+                setSubmitting(false);
+                setMostrarPopUpSucesso(true);
             }
-            setSubmitting(false);
         } catch (error) {
             setSubmitting(false);
             console.log(error);
@@ -70,17 +83,26 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
 
     const entregarERetirar = async () => {
         try {
-            setSubmitting(true);
 
-            await api.post('/registro', {
+            setBotaoClicado('entregar e retirar');
+            setSubmitting(true);
+            const responseEntrega = await api.post('/registro', {
                 colaborador_id: colaborador?.id,
                 status: 'entregou'
             })
 
-            await api.post('/registro', {
+            const resposneRetirada = await api.post('/registro', {
                 colaborador_id: colaborador?.id,
                 status: 'retirou'
             });
+
+            if (resposneRetirada.data.message === 'error'){
+                setSubmitting(false);
+                setMostrarPopUpNaoAutorizado(true);
+            }else{
+                setSubmitting(false);
+                setMostrarPopUpSucesso(true);
+            }
         } catch (error) {
             setSubmitting(false);
             console.log(error);

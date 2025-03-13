@@ -2,6 +2,7 @@
 import CardColaborador from "@/components/CardColaborador";
 import FormInput from "@/components/FormInput";
 import PopUpNaoAutorizado from "@/components/PopNaoAutorizado";
+import PopUpSucesso from "@/components/PopUpSucesso";
 import PopUpUsuarioNaoEncontrado from "@/components/PopUpUsuarioNaoEncontrado";
 import SubmitButton from "@/components/SubmitButton";
 import api from "@/services/axios";
@@ -16,9 +17,11 @@ export default function Home() {
   const [colaborador, setColaborador] = useState<Colaborador | null>(null);//Estado que controla o colaborador
 
   //Estados que controlam a visibilidade dos popUps
+  const [botaoClicao, setBotaoClicado] = useState(''); //Estado que controla qual o botão clicado
+  const [mostrarPopUpSucesso, setMostrarPopUpSucesso] = useState(false);
   const [mostrarPopUpNaoAutorizado, setMostrarPopUpNaoAutorizado] = useState(false);
   const [mostrarPopUpNaoEncontrado, setMostrarPopUpNaoEncontrado] = useState(false);
-  const[nColaborador, setNColaborador] = useState(0);//Estado que controla o número do colaborador
+  const [nColaborador, setNColaborador] = useState(0);//Estado que controla o número do colaborador
 
   //Estado que controla o tempo de exibição do erro no formulário
   const [isErrorVisible, setIsErrorVisible] = useState(true);
@@ -47,57 +50,80 @@ export default function Home() {
     }
   }
 
+  //Funcao para redirecionar automaticamente para pagina de busca, após uma mensagem de sucesso!
+  const handleTogglePopUpSucesso = ()=>{
+    setMostrarPopUpSucesso(false);
+    setColaborador(null);
+  }
+
+  useEffect(()=>{
+    console.log("BOTAO CLICADO 1", botaoClicao)
+  }, [botaoClicao])
+
   return (
 
     <div className="flex flex-col md:flex-row">
       {/**PopUps*/}
       {mostrarPopUpNaoEncontrado && <PopUpUsuarioNaoEncontrado numero={nColaborador} handleTogglePopUp={() => setMostrarPopUpNaoEncontrado(false)} />}
       {mostrarPopUpNaoAutorizado && <PopUpNaoAutorizado colaborador={colaborador} handleTogglePopUp={() => setMostrarPopUpNaoAutorizado(false)} />}
+      {mostrarPopUpSucesso && <PopUpSucesso colaborador={colaborador} botaoClicado={botaoClicao} handleTogglePopUp={handleTogglePopUpSucesso} />}
+
       {/**Background Verde*/}
       <div className="flex w-[100vw] h-[100vh] bg-verde-primario justify-center items-center md:w-[50vw]">
         {!colaborador ? (
-        <>
-        {/**Caixa Formulario*/}
-        <div className="flex flex-col p-2 justify-evenly w-[80%] h-[50%] bg-verde-terciario rounded-xl md:w-[60%] lg:px-16 lg:py-20">
-          {/**Texto Login*/}
-          <h1 className="font-bold text-center font-poppins-semi-bold text-xl md:text-2xl">Digite o número do colaborador</h1>
-          {/**Formulario*/}
-          <Formik
-            initialValues={{
-              nColaborador: '',
-            }}
-            validationSchema={Yup.object({
-              nColaborador: Yup.number().typeError('Por favor, digite um número válido!').required('Por favor, digite o número do colaborador!'),
+          <>
+            {/**Caixa Formulario*/}
+            <div className="flex flex-col p-2 justify-evenly w-[80%] h-[50%] bg-verde-terciario rounded-xl md:w-[60%] lg:px-16 lg:py-20">
+              {/**Texto Login*/}
+              <h1 className="font-bold text-center font-poppins-semi-bold text-xl md:text-2xl">Digite o número do colaborador</h1>
+              {/**Formulario*/}
+              <Formik
+                initialValues={{
+                  nColaborador: '',
+                }}
+                validationSchema={Yup.object({
+                  nColaborador: Yup.number().typeError('Por favor, digite um número válido!').required('Por favor, digite o número do colaborador!'),
 
-            })}
-            onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                fetchColaborador(Number(values.nColaborador));//Busca o colaborador
-                setSubmitting(false);//Desabilita o botão de submit
-              }, 400);
-            }}
-          >
-            <Form className='flex flex-col gap-4'>
-              {/**N do colaborador*/}
-              <FormInput
-                name='nColaborador'
-                placeholder='Exemplo: 001'
-                label='N° do colaborador'
-                isErrorVisible={isErrorVisible}
-              />
+                })}
+                onSubmit={(values, { setSubmitting }) => {
+                  setTimeout(() => {
+                    fetchColaborador(Number(values.nColaborador));//Busca o colaborador
+                    setSubmitting(false);//Desabilita o botão de submit
+                  }, 400);
+                }}
+              >
+                <Form className='flex flex-col gap-4'>
+                  {/**N do colaborador*/}
+                  <FormInput
+                    name='nColaborador'
+                    placeholder='Exemplo: 001'
+                    label='N° do colaborador'
+                    isErrorVisible={isErrorVisible}
+                  />
 
-              {/**Submit*/}
-              <SubmitButton name='Pesquisar' setIsErrorVisible={setIsErrorVisible} handleShowError={handleShowError} />
-            </Form>
-          </Formik>
-        </div></>
-        ) : (<CardColaborador colaborador={colaborador} setColaborador={setColaborador} setMostrarPopUpNaoAutorizado={setMostrarPopUpNaoAutorizado}/>)}
+                  {/**Submit*/}
+                  <SubmitButton name='Pesquisar' setIsErrorVisible={setIsErrorVisible} handleShowError={handleShowError} />
+                </Form>
+              </Formik>
+            </div></>
+        ) : (<CardColaborador
+          
+          colaborador={colaborador}
+          setColaborador={setColaborador}
+          setMostrarPopUpNaoAutorizado={setMostrarPopUpNaoAutorizado}
+          setMostrarPopUpSucesso={setMostrarPopUpSucesso}
+          setBotaoClicado={setBotaoClicado} />)}
       </div>
 
       {/**Background Branco*/}
       <div className="hidden md:flex w-[50vw] h-[100vh] justify-center items-center">
-      {colaborador && <CardColaborador colaborador={colaborador} setColaborador={setColaborador} setMostrarPopUpNaoAutorizado={setMostrarPopUpNaoAutorizado}/>}
+        {colaborador && <CardColaborador
+          colaborador={colaborador}
+          setColaborador={setColaborador}
+          setMostrarPopUpNaoAutorizado={setMostrarPopUpNaoAutorizado}
+          setMostrarPopUpSucesso={setMostrarPopUpSucesso}
+          setBotaoClicado={setBotaoClicado} />}
       </div>
-      </div>
+    </div>
   );
 }
