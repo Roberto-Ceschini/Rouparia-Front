@@ -107,7 +107,6 @@ export default function CardColaborador({ colaborador }: CardColaboradorProps) {
                 <ServiceButton
                     name='Entregar'
                     textColor="white"
-                    color="verde-secundario"
                     hoverColor="verde-secundario-hover"
                     onClickFunction={entregar} 
                     submitting = {submitting}/>
