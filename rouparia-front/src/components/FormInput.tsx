@@ -28,7 +28,7 @@ export default function FormInput({ name, placeholder, label, isErrorVisible = t
                 {name === 'email' ? inputIcons[0]() : name === 'nColaborador' ? '' : inputIcons[1]()}
             </div>
             {isErrorVisible && (
-                <p className='text-red-500 text-sm'><ErrorMessage name={name} /></p>
+                <p className='text-vermelho text-sm'><ErrorMessage name={name} /></p>
             )}
         </div>
     );

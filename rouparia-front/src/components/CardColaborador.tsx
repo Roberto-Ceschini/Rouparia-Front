@@ -4,6 +4,7 @@ import SvgSetaVoltar from "./SvgSetaVoltar";
 import Link from "next/link";
 import { use, useEffect, useState } from "react";
 import api from "@/services/axios";
+import path from "path";
 
 interface CardColaboradorProps {
     colaborador: Colaborador | null;
@@ -37,7 +38,6 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
 
     const entregar = async () => {
         try {
-            console.log('entregou');
             setBotaoClicado('entregar');
             setSubmitting(true);
             const response = await api.post('/registro', {
@@ -119,8 +119,8 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
             {/**Info colaborador*/}
             <h1 className="font-poppins-bold text-xl">{String(colaborador?.numero).padStart(3, '0')} - {colaborador?.nome}</h1>
             <h2>Status: <span className={`${lastRegistro?.status === 'entregou'
-                ? 'text-green-300'
-                : 'text-red-500'}`}>
+                ? 'text-verde-terciario'
+                : 'text-vermelho'}`}>
                 {!lastRegistro
                     ? 'Usuario sem registro'
                     : capitalize(lastRegistro?.status) + ' em ' + formatData(lastRegistro?.data)}</span></h2>
@@ -146,10 +146,15 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
                     textColor="white"
                     hoverColor="verde-terciario-hover" 
                     onClickFunction={retirar}
-                    submitting = {submitting}/>
+                    submitting={submitting} />
             </div>
             {/**Historico*/}
-            <ServiceButton name='Ver histórico' color="white" textColor="black" hoverColor="white-hover" />
+            <Link
+                href={`/historicoColaborador/${colaborador?.id}`}
+                className='bg-white text-black flex justify-center items-center w-[100%] py-1.5 rounded-md font-poppins-regular hover:cursor-pointer shadow-neutral-900 shadow-sm'>
+                Ver histórico
+            </Link>
+
         </div>
     );
 }

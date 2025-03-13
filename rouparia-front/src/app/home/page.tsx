@@ -36,7 +36,6 @@ export default function Home() {
   //Função que busca o colaborador pelo número
   const fetchColaborador = async (nColaborador: number) => {
     setNColaborador(nColaborador);
-    console.log("entrei aqui!")
     try {
       const response = await api.get(`colaborador/numero/${nColaborador}`);
       console.log(response);
@@ -55,10 +54,6 @@ export default function Home() {
     setMostrarPopUpSucesso(false);
     setColaborador(null);
   }
-
-  useEffect(()=>{
-    console.log("BOTAO CLICADO 1", botaoClicao)
-  }, [botaoClicao])
 
   return (
 
@@ -87,8 +82,8 @@ export default function Home() {
                 })}
                 onSubmit={(values, { setSubmitting }) => {
                   setTimeout(() => {
-                    fetchColaborador(Number(values.nColaborador));//Busca o colaborador
                     setSubmitting(false);//Desabilita o botão de submit
+                    fetchColaborador(Number(values.nColaborador));//Busca o colaborador
                   }, 400);
                 }}
               >
