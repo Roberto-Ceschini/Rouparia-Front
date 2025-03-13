@@ -1,7 +1,6 @@
 import { ErrorMessage, Field } from "formik";
 import SvgCaixaEmail from "./SvgCaixaEmail";
 import SvgCadeado from "./SvgCadeado";
-import { useState } from "react";
 
 interface FormInputProps
  {

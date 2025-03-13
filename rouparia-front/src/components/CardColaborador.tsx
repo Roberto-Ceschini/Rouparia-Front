@@ -2,6 +2,7 @@ import { Colaborador } from "@/types/colaborador";
 import ServiceButton from "./ServiceButton";
 import SvgSetaVoltar from "./SvgSetaVoltar";
 import Link from "next/link";
+import { use, useEffect, useState } from "react";
 
 interface CardColaboradorProps {
     colaborador: Colaborador | null;
@@ -9,7 +10,15 @@ interface CardColaboradorProps {
 
 export default function CardColaborador({colaborador}: CardColaboradorProps) {
 
-    const lastRegistro = colaborador?.registros[colaborador?.registros.length - 1];
+    //Pega o último registro do colaborador
+    const lastRegistro = colaborador?.registros?.length ? colaborador.registros[colaborador.registros.length - 1] : null;
+
+    const formatData = (data: string) => {
+        const dataLocal = new Date(data).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });;
+        const dataSplit = dataLocal.split('-');
+        return `${dataSplit}`;
+    }
+
     return (
         //Card do colaborador
         <div className="flex flex-col p-4 justify-evenly w-[80%] bg-cinza-claro shadow-md shadow-gray-900 rounded-xl md:w-[60%] lg:px-16">
@@ -17,7 +26,8 @@ export default function CardColaborador({colaborador}: CardColaboradorProps) {
             <button className=" w-8 h-8 flex justify-center items-center hover:cursor-pointer"><SvgSetaVoltar/></button>
             {/**Info colaborador*/}
             <h1 className="font-poppins-bold text-xl">{String(colaborador?.numero).padStart(3, '0')} - {colaborador?.nome}</h1>
-            <h2>Status: <span className={`${lastRegistro?.status === 'Entregado' ? 'text-green-300' : 'text-red-500' }`}>{lastRegistro?.status} em {lastRegistro?.data}</span></h2>
+            <h2>Status: <span className={`${lastRegistro?.status === 'Entregado' ? 'text-green-300' : 'text-red-500' }`}>{!lastRegistro ? 'Usuario sem registro' : lastRegistro?.status + ' em ' + formatData(lastRegistro?.data) }</span></h2>
+
             {/**Acoes*/}
             <div className="flex flex-col h-[30vh] justify-center gap-4">
                 <ServiceButton name='Entregar e retirar' color="laranja" textColor="white" hoverColor="laranja-hover"/>

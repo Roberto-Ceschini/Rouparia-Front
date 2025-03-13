@@ -2,7 +2,9 @@
 import CardColaborador from "@/components/CardColaborador";
 import FormInput from "@/components/FormInput";
 import SubmitButton from "@/components/SubmitButton";
+import api from "@/services/axios";
 import { Colaborador } from "@/types/colaborador";
+import axios from "axios";
 import { Form, Formik } from "formik";
 import { use, useEffect, useState } from "react";
 import * as Yup from 'yup';
@@ -13,25 +15,26 @@ export default function Home() {
 
   const [isErrorVisible, setIsErrorVisible] = useState(true);//Estado que controla a visibilidade do erro
 
-  useEffect(() => {
-    setColaborador({
-      id: 1,
-      nome: 'Paloma S. Santana',
-      numero: 1,
-      area_id: 1,
-      registros: [
-        { id: 1, data: "2024-03-12", status: "Entregou", colaborador_id: 1, colaborador: { id: 1, numero: 1, nome: "João", area_id: 2, registros: [] } },  
-  { id: 2, data: "2024-03-12", status: "Retirado", colaborador_id: 2, colaborador: { id: 2, numero: 2, nome: "Maria", area_id: 3, registros: [] } },  
-  { id: 3, data: "2024-03-12", status: "Retirado", colaborador_id: 1, colaborador: { id: 1, numero: 1, nome: "João", area_id: 2, registros: [] } },  
-      ]
-    });
-  }, []);
-
   //Função que mostra o erro e depois de 4 segundos esconde
   const handleShowError = () => {
     setTimeout(() => {
       setIsErrorVisible(prev => !prev);
     }, 4000);
+  }
+
+  //Função que busca o colaborador pelo número
+  const fetchColaborador = async (nColaborador: number) => {
+    console.log("entrei aqui!")
+    try {
+      const response = await api.get(`colaborador/numero/${nColaborador}`);
+      console.log(response);
+      if (response) {
+        const colaborador = response.data;
+        setColaborador(colaborador);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -56,6 +59,7 @@ export default function Home() {
             })}
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
+                fetchColaborador(Number(values.nColaborador));
                 alert(JSON.stringify(values, null, 2));
                 setSubmitting(false);
               }, 400);
