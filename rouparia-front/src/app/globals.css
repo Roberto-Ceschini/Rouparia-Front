@@ -25,6 +25,10 @@
     --color-verde-primario: #14745A;
     --color-verde-secundario: #7C9C91;
     --color-verde-terciario: #99CABD;
+    --color-verde-primario-hover: #18916F;
+    --color-verde-secundario-hover: #96B5AA;
+    --color-verde-terciario-hover: #B5E0D3;
+    --color-white-hover: #E0E0E0;
     --color-laranja: #F49C1F;
     --color-laranja-hover: #F7B14C;
 }
