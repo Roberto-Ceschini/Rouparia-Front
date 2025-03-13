@@ -1,29 +1,45 @@
-"use client"
+"use client";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import api from "@/services/axios";
+import HeaderHistorico from "@/components/HeaderHistoricoColaborador";
+import HeaderHistoricoColaborador from "@/components/HeaderHistoricoColaborador";
+import TabelaRegistros from "@/components/TabelaRegistros";
 import { Colaborador } from "@/types/colaborador";
-import { useParams } from "next/navigation"
-import { useState } from "react";
 
-export default function HistoricoColaborador(){
+export default function HistoricoColaborador() {
+  const { id } = useParams();
+  const [colaborador, setColaborador] = useState<Colaborador | null>(null);
 
-    const {id} = useParams();
-
-    const [colaborador, setColaborador] = useState<Colaborador | null>(null);
-
-    const fetchColaborador = async () => {
-        try {
-          const response = await api.get(`colaborador/${id}`);
-          console.log(response);
-          if (response) {
-            const colaborador = response.data;
-          }
-        } catch (error) {
-          console.log(error);
-        }
+  // Função para carregar o colaborador a partir do id
+  const fetchColaborador = async () => {
+    try {
+      const response = await api.get(`/colaborador/id/${id}`);
+      console.log(response.data);
+      if (response.data) {
+        setColaborador(response.data);
       }
-    return(
-        <div>
-            <p> Bem vindo colaborador {id} </p>
-        </div>
-    )
+    } catch (error) {
+      console.log("Erro ao buscar colaborador:", error);
+    }
+  };
+
+  // Carrega o colaborador ao abrir a página
+  useEffect(() => {
+    fetchColaborador();
+  }, [id]);
+
+  // Aguarda o carregamento do colaborador antes de renderizar
+  if (!colaborador) {
+    return <p>Carregando...</p>;
+  }
+
+  //Pagina principal
+  return (
+    //Body
+    <div className="flex flex-col w-[100vw] h-[100vh] border-2 border-red-500">
+      <HeaderHistoricoColaborador />
+      <TabelaRegistros colaborador={colaborador}/> 
+    </div>
+  );
 }
