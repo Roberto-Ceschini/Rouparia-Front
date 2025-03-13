@@ -22,8 +22,10 @@
     --font-poppins-semiBold: Poppins-SemiBold, "sans-serif";
 
     --color-cinza-claro: #FBFBFB;
+    --color-vermelho: #FD5765;
+    --color-vermelho-hover: #D94C58; 
     --color-verde-primario: #14745A;
-    --color-verde-secundario: #7C9C91;
+    --color-verde-secundario: #7C9C90;
     --color-verde-terciario: #99CABD;
     --color-verde-primario-hover: #18916F;
     --color-verde-secundario-hover: #96B5AA;

@@ -1,6 +1,7 @@
 "use client"
 import CardColaborador from "@/components/CardColaborador";
 import FormInput from "@/components/FormInput";
+import PopUpUsuarioNaoEncontrado from "@/components/PopUpUsuarioNaoEncontrado";
 import SubmitButton from "@/components/SubmitButton";
 import api from "@/services/axios";
 import { Colaborador } from "@/types/colaborador";
@@ -13,6 +14,9 @@ export default function Home() {
 
   const [colaborador, setColaborador] = useState<Colaborador | null>(null);//Estado que controla o colaborador
 
+  const [mostrarPopUp, setMostrarPopUp] = useState(false);//Estado que controla a visibilidade do popUp de usuário não encontrado
+  const[nColaborador, setNColaborador] = useState(0);//Estado que controla o número do colaborador
+
   const [isErrorVisible, setIsErrorVisible] = useState(true);//Estado que controla a visibilidade do erro
 
   //Função que mostra o erro e depois de 4 segundos esconde
@@ -24,6 +28,7 @@ export default function Home() {
 
   //Função que busca o colaborador pelo número
   const fetchColaborador = async (nColaborador: number) => {
+    setNColaborador(nColaborador);
     console.log("entrei aqui!")
     try {
       const response = await api.get(`colaborador/numero/${nColaborador}`);
@@ -34,12 +39,15 @@ export default function Home() {
       }
     } catch (error) {
       console.log(error);
+      setMostrarPopUp(true);
     }
   }
 
   return (
 
     <div className="flex flex-col md:flex-row">
+      {/**PopUp de usuário não encontrado*/}
+      {mostrarPopUp && <PopUpUsuarioNaoEncontrado numero={nColaborador} handleTogglePopUp={() => setMostrarPopUp(false)} />}
       {/**Background Verde*/}
       <div className="flex w-[100vw] h-[100vh] bg-verde-primario justify-center items-center md:w-[50vw]">
         {!colaborador ? (
@@ -59,9 +67,8 @@ export default function Home() {
             })}
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
-                fetchColaborador(Number(values.nColaborador));
-                alert(JSON.stringify(values, null, 2));
-                setSubmitting(false);
+                fetchColaborador(Number(values.nColaborador));//Busca o colaborador
+                setSubmitting(false);//Desabilita o botão de submit
               }, 400);
             }}
           >
