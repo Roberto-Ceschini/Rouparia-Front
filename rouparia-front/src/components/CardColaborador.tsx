@@ -7,6 +7,9 @@ import api from "@/services/axios";
 
 interface CardColaboradorProps {
     colaborador: Colaborador | null;
+    setColaborador: (value: Colaborador | null) => void;
+    setMostrarPopUpNaoAutorizado: (value: boolean) => void;
+
 }
 
 //Função que capitaliza a primeira letra de uma string
@@ -15,7 +18,7 @@ const capitalize = (s: string) => {
   return s.charAt(0).toUpperCase() + s.slice(1)
 }
 
-export default function CardColaborador({ colaborador }: CardColaboradorProps) {
+export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutorizado, setColaborador }: CardColaboradorProps) {
 
     //Pega o último registro do colaborador
     const lastRegistro = colaborador?.registros?.length ? colaborador.registros[colaborador.registros.length - 1] : null;
@@ -55,6 +58,9 @@ export default function CardColaborador({ colaborador }: CardColaboradorProps) {
                 status: 'retirou'
             });
             console.log(response.data);
+            if (response.data.message === 'error'){
+                setMostrarPopUpNaoAutorizado(true);
+            }
             setSubmitting(false);
         } catch (error) {
             setSubmitting(false);
@@ -84,8 +90,10 @@ export default function CardColaborador({ colaborador }: CardColaboradorProps) {
     return (
         //Card do colaborador
         <div className="flex flex-col p-4 justify-evenly w-[80%] bg-cinza-claro shadow-md shadow-gray-900 rounded-xl md:w-[60%] lg:px-16">
+
             {/**Voltar*/}
-            <button className=" w-8 h-8 flex justify-center items-center hover:cursor-pointer"><SvgSetaVoltar /></button>
+            <button className=" w-8 h-8 flex justify-center items-center hover:cursor-pointer" onClick={()=>{setColaborador(null)}}><SvgSetaVoltar /></button>
+
             {/**Info colaborador*/}
             <h1 className="font-poppins-bold text-xl">{String(colaborador?.numero).padStart(3, '0')} - {colaborador?.nome}</h1>
             <h2>Status: <span className={`${lastRegistro?.status === 'entregou'

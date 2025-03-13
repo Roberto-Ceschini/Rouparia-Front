@@ -1,6 +1,7 @@
 "use client"
 import CardColaborador from "@/components/CardColaborador";
 import FormInput from "@/components/FormInput";
+import PopUpNaoAutorizado from "@/components/PopNaoAutorizado";
 import PopUpUsuarioNaoEncontrado from "@/components/PopUpUsuarioNaoEncontrado";
 import SubmitButton from "@/components/SubmitButton";
 import api from "@/services/axios";
@@ -14,10 +15,13 @@ export default function Home() {
 
   const [colaborador, setColaborador] = useState<Colaborador | null>(null);//Estado que controla o colaborador
 
-  const [mostrarPopUp, setMostrarPopUp] = useState(false);//Estado que controla a visibilidade do popUp de usuário não encontrado
+  //Estados que controlam a visibilidade dos popUps
+  const [mostrarPopUpNaoAutorizado, setMostrarPopUpNaoAutorizado] = useState(false);
+  const [mostrarPopUpNaoEncontrado, setMostrarPopUpNaoEncontrado] = useState(false);
   const[nColaborador, setNColaborador] = useState(0);//Estado que controla o número do colaborador
 
-  const [isErrorVisible, setIsErrorVisible] = useState(true);//Estado que controla a visibilidade do erro
+  //Estado que controla o tempo de exibição do erro no formulário
+  const [isErrorVisible, setIsErrorVisible] = useState(true);
 
   //Função que mostra o erro e depois de 4 segundos esconde
   const handleShowError = () => {
@@ -39,15 +43,16 @@ export default function Home() {
       }
     } catch (error) {
       console.log(error);
-      setMostrarPopUp(true);
+      setMostrarPopUpNaoEncontrado(true);
     }
   }
 
   return (
 
     <div className="flex flex-col md:flex-row">
-      {/**PopUp de usuário não encontrado*/}
-      {mostrarPopUp && <PopUpUsuarioNaoEncontrado numero={nColaborador} handleTogglePopUp={() => setMostrarPopUp(false)} />}
+      {/**PopUps*/}
+      {mostrarPopUpNaoEncontrado && <PopUpUsuarioNaoEncontrado numero={nColaborador} handleTogglePopUp={() => setMostrarPopUpNaoEncontrado(false)} />}
+      {mostrarPopUpNaoAutorizado && <PopUpNaoAutorizado colaborador={colaborador} handleTogglePopUp={() => setMostrarPopUpNaoAutorizado(false)} />}
       {/**Background Verde*/}
       <div className="flex w-[100vw] h-[100vh] bg-verde-primario justify-center items-center md:w-[50vw]">
         {!colaborador ? (
@@ -86,12 +91,12 @@ export default function Home() {
             </Form>
           </Formik>
         </div></>
-        ) : (<CardColaborador colaborador={colaborador}/>)}
+        ) : (<CardColaborador colaborador={colaborador} setColaborador={setColaborador} setMostrarPopUpNaoAutorizado={setMostrarPopUpNaoAutorizado}/>)}
       </div>
 
       {/**Background Branco*/}
       <div className="hidden md:flex w-[50vw] h-[100vh] justify-center items-center">
-      {colaborador && <CardColaborador colaborador={colaborador}/>}
+      {colaborador && <CardColaborador colaborador={colaborador} setColaborador={setColaborador} setMostrarPopUpNaoAutorizado={setMostrarPopUpNaoAutorizado}/>}
       </div>
       </div>
   );
