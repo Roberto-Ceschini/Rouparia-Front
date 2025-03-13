@@ -37,9 +37,11 @@ export default function HistoricoColaborador() {
   //Pagina principal
   return (
     //Body
-    <div className="flex flex-col w-[100vw] h-[100vh] border-2 border-red-500">
+    <div className="flex flex-col w-[100vw] h-[100vh] items-center">
       <HeaderHistoricoColaborador />
-      <TabelaRegistros colaborador={colaborador}/> 
+      <div className="mt-10 w-[95vw]">
+        <TabelaRegistros colaborador={colaborador}/> 
+      </div>
     </div>
   );
 }
