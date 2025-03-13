@@ -20,9 +20,9 @@ export default function Home() {
       numero: 1,
       area_id: 1,
       registros: [
-        { id: 1, data: "2024-03-12", status: "Ativo", colaborador_id: 1, colaborador: { id: 1, numero: 1, nome: "João", area_id: 2, registros: [] } },  
-  { id: 2, data: "2024-03-12", status: "Inativo", colaborador_id: 2, colaborador: { id: 2, numero: 2, nome: "Maria", area_id: 3, registros: [] } },  
-  { id: 3, data: "2024-03-12", status: "Ativo", colaborador_id: 1, colaborador: { id: 1, numero: 1, nome: "João", area_id: 2, registros: [] } },  
+        { id: 1, data: "2024-03-12", status: "Entregou", colaborador_id: 1, colaborador: { id: 1, numero: 1, nome: "João", area_id: 2, registros: [] } },  
+  { id: 2, data: "2024-03-12", status: "Retirado", colaborador_id: 2, colaborador: { id: 2, numero: 2, nome: "Maria", area_id: 3, registros: [] } },  
+  { id: 3, data: "2024-03-12", status: "Retirado", colaborador_id: 1, colaborador: { id: 1, numero: 1, nome: "João", area_id: 2, registros: [] } },  
       ]
     });
   }, []);
