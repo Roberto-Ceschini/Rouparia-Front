@@ -2,6 +2,8 @@
 
 import { Colaborador } from "@/types/colaborador"; // ajuste o caminho conforme sua estrutura
 import { Registro } from "@/types/registro"; // ajuste o caminho conforme sua estrutura
+import LinhaTabela from "./ColunaTabela";
+import ColunaTabela from "./ColunaTabela";
 
 interface TabelaRegistrosProps {
     colaborador: Colaborador;
@@ -18,26 +20,28 @@ export default function TabelaRegistros({ colaborador }: TabelaRegistrosProps) {
     const registros: Registro[] = colaborador.registros;
 
     return (
-        <table className="min-w-full border-collapse">
-            <thead>
-                <tr>
-                    <th className="border px-4 py-2">Número</th>
-                    <th className="border px-4 py-2">Nome</th>
-                    <th className="border px-4 py-2">Área</th>
-                    <th className="border px-4 py-2">Status</th>
-                    <th className="border px-4 py-2">Data</th>
+        <table className="w-[80vw]">
+            <thead className="sticky top-0">
+                <tr className="bg-[#F2F2F2] shadow-md rounded-l-xl rounded-r-xl">
+                    <th className="px-4 py-2 font-poppins-semiBold rounded-l-xl">Número</th>
+                    <th className="px-4 py-2 font-poppins-semiBold	">Nome</th>
+                    <th className="px-4 py-2 font-poppins-semiBold	">Área</th>
+                    <th className="px-4 py-2 font-poppins-semiBold	">Vínculo</th>
+                    <th className="px-4 py-2 font-poppins-semiBold	">Status</th>
+                    <th className="px-4 py-2 font-poppins-semiBold	">Quantidade</th>
+                    <th className="px-4 py-2 font-poppins-semiBold rounded-r-xl	">Data</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody className="overflow-y-auto">
                 {registros.map((registro) => (
-                    <tr key={registro.id} className="hover:bg-verde-secundario-hover/30">
-                        <td className="border px-4 py-2">{colaborador.numero}</td>
-                        <td className="border px-4 py-2">{colaborador.nome}</td>
-                        <td className="border px-4 py-2">
-                            {colaborador.area?.nome || "N/A"}
-                        </td>
-                        <td className="border px-4 py-2">{registro.status}</td>
-                        <td className="border px-4 py-2">{formatData(registro.data)}</td>
+                    <tr key={registro.id} className="hover:bg-verde-secundario-hover/30 shadow-md shadow-verde-terciario-hover/50 rounded-l-xl rounded-r-xl">
+                        <ColunaTabela conteudo={String(colaborador?.numero).padStart(3, '0')} coluna="numero" />
+                        <ColunaTabela conteudo={colaborador.nome} coluna="nome" />
+                        <ColunaTabela conteudo={colaborador.area?.nome || "N/A"} coluna="area" />
+                        <ColunaTabela conteudo={colaborador.vinculo?.nome || "N/A"} coluna="vinculo" />
+                        <ColunaTabela conteudo={registro.status} coluna="status" />
+                        <ColunaTabela conteudo={registro.quantidade} coluna="quantidade" />
+                        <ColunaTabela conteudo={formatData(registro.data)} coluna="data"/> 
                     </tr>
                 ))}
             </tbody>

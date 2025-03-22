@@ -39,7 +39,7 @@ export default function HistoricoColaborador() {
     //Body
     <div className="flex flex-col w-[100vw] h-[100vh] items-center">
       <HeaderHistoricoColaborador />
-      <div className="mt-10 w-[95vw]">
+      <div className="mt-10 w-[100%] flex justify-center">
         <TabelaRegistros colaborador={colaborador}/> 
       </div>
     </div>

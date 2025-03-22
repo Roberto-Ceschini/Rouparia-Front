@@ -5,5 +5,6 @@ export type Registro = {
   data: string; // Pode ser Date se você for manipular como objeto Date no front
   status: string;
   colaborador_id: number;
+  quantidade: number;
   colaborador: Colaborador;
 };
