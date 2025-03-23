@@ -22,9 +22,16 @@ export default function Home() {
   const [mostrarPopUpNaoAutorizado, setMostrarPopUpNaoAutorizado] = useState(false);
   const [mostrarPopUpNaoEncontrado, setMostrarPopUpNaoEncontrado] = useState(false);
   const [nColaborador, setNColaborador] = useState(0);//Estado que controla o número do colaborador
+  const [errorCode, setErrorCode] = useState(0);
 
   //Estado que controla o tempo de exibição do erro no formulário
   const [isErrorVisible, setIsErrorVisible] = useState(true);
+
+  //Funcao que controla o popUpNaoAutorizado + erro
+  const handlePopUpNaoAutorizado = (errorCode: number)=>{
+    setErrorCode(errorCode);
+    setMostrarPopUpNaoAutorizado(prev=>!prev);
+  }
 
   //Função que mostra o erro e depois de 4 segundos esconde
   const handleShowError = () => {
@@ -50,22 +57,49 @@ export default function Home() {
   }
 
   //Funcao para redirecionar automaticamente para pagina de busca, após uma mensagem de sucesso!
-  const handleTogglePopUpSucesso = ()=>{
+  const handleTogglePopUpSucesso = () => {
     setMostrarPopUpSucesso(false);
     setColaborador(null);
   }
+
+  const breakpoints = {
+    sm: 640,
+    md: 768,
+    lg: 1024,
+    xl: 1280,
+    "2xl": 1536,
+  };
+
+  const [tamanhoTela, setTamanhoTela] = useState<number>(0);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setTamanhoTela(window.innerWidth);
+    };
+
+    // Captura o tamanho inicial da tela
+    setTamanhoTela(window.innerWidth);
+
+    // Adiciona o event listener para monitorar mudanças no tamanho da tela
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      // Remove o event listener ao desmontar o componente
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
 
     <div className="flex flex-col md:flex-row">
       {/**PopUps*/}
       {mostrarPopUpNaoEncontrado && <PopUpUsuarioNaoEncontrado numero={nColaborador} handleTogglePopUp={() => setMostrarPopUpNaoEncontrado(false)} />}
-      {mostrarPopUpNaoAutorizado && <PopUpNaoAutorizado colaborador={colaborador} handleTogglePopUp={() => setMostrarPopUpNaoAutorizado(false)} />}
+      {mostrarPopUpNaoAutorizado && <PopUpNaoAutorizado colaborador={colaborador} handleTogglePopUp={()=>setMostrarPopUpNaoAutorizado(false)} errorCode={errorCode}/>}
       {mostrarPopUpSucesso && <PopUpSucesso colaborador={colaborador} botaoClicado={botaoClicao} handleTogglePopUp={handleTogglePopUpSucesso} />}
 
       {/**Background Verde*/}
       <div className="flex w-[100vw] h-[100vh] bg-verde-primario justify-center items-center md:w-[50vw]">
-        {!colaborador ? (
+        {(!colaborador) ? (
           <>
             {/**Caixa Formulario*/}
             <div className="flex flex-col p-2 justify-evenly w-[80%] h-[50%] bg-verde-terciario rounded-xl md:w-[60%] lg:px-16 lg:py-20">
@@ -101,13 +135,14 @@ export default function Home() {
                 </Form>
               </Formik>
             </div></>
-        ) : (<CardColaborador
-          
-          colaborador={colaborador}
-          setColaborador={setColaborador}
-          setMostrarPopUpNaoAutorizado={setMostrarPopUpNaoAutorizado}
-          setMostrarPopUpSucesso={setMostrarPopUpSucesso}
-          setBotaoClicado={setBotaoClicado} />)}
+        ) : (<div className="md:hidden">
+          <CardColaborador
+            colaborador={colaborador}
+            setColaborador={setColaborador}
+            setMostrarPopUpNaoAutorizado={handlePopUpNaoAutorizado}
+            setMostrarPopUpSucesso={setMostrarPopUpSucesso}
+            setBotaoClicado={setBotaoClicado} />
+        </div>)}
       </div>
 
       {/**Background Branco*/}
@@ -115,7 +150,7 @@ export default function Home() {
         {colaborador && <CardColaborador
           colaborador={colaborador}
           setColaborador={setColaborador}
-          setMostrarPopUpNaoAutorizado={setMostrarPopUpNaoAutorizado}
+          setMostrarPopUpNaoAutorizado={handlePopUpNaoAutorizado}
           setMostrarPopUpSucesso={setMostrarPopUpSucesso}
           setBotaoClicado={setBotaoClicado} />}
       </div>
