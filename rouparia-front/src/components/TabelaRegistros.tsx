@@ -4,9 +4,10 @@ import { Colaborador } from "@/types/colaborador"; // ajuste o caminho conforme 
 import { Registro } from "@/types/registro"; // ajuste o caminho conforme sua estrutura
 import LinhaTabela from "./ColunaTabela";
 import ColunaTabela from "./ColunaTabela";
+import { ColaboradorSimples } from "@/types/colaboradorSimplificado";
 
 interface TabelaRegistrosProps {
-    colaborador: Colaborador;
+    colaborador: ColaboradorSimples;
 }
 
 //Formata a data, transforma a data para mostrar a hora e o dia locais (Brasília)
@@ -37,8 +38,8 @@ export default function TabelaRegistros({ colaborador }: TabelaRegistrosProps) {
                     <tr key={registro.id} className="hover:bg-verde-secundario-hover/30 shadow-md shadow-verde-terciario-hover/50 rounded-l-xl rounded-r-xl">
                         <ColunaTabela conteudo={String(colaborador?.numero).padStart(3, '0')} coluna="numero" />
                         <ColunaTabela conteudo={colaborador.nome} coluna="nome" />
-                        <ColunaTabela conteudo={colaborador.area?.nome || "N/A"} coluna="area" />
-                        <ColunaTabela conteudo={colaborador.vinculo?.nome || "N/A"} coluna="vinculo" />
+                        <ColunaTabela conteudo={colaborador.area || "N/A"} coluna="area" />
+                        <ColunaTabela conteudo={colaborador.vinculo || "N/A"} coluna="vinculo" />
                         <ColunaTabela conteudo={registro.status} coluna="status" />
                         <ColunaTabela conteudo={registro.quantidade} coluna="quantidade" />
                         <ColunaTabela conteudo={formatData(registro.data)} coluna="data"/> 

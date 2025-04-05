@@ -6,6 +6,8 @@ import HeaderHistorico from "@/components/HeaderHistoricoColaborador";
 import HeaderHistoricoColaborador from "@/components/HeaderHistoricoColaborador";
 import TabelaRegistros from "@/components/TabelaRegistros";
 import { Colaborador } from "@/types/colaborador";
+import { ColaboradorSimples } from "@/types/colaboradorSimplificado";
+import { Registro } from "@/types/registro";
 
 export default function HistoricoColaborador() {
   const params = useParams();
@@ -16,19 +18,34 @@ export default function HistoricoColaborador() {
   const numero = searchParams.get('numero');
   const area = searchParams.get('area');
   const vinculo = searchParams.get('vinculo');
+  const paginaAtual = 1;
+  const limite = 10;
 
-  const [colaborador, setColaborador] = useState<Colaborador | null>(null);
+  const [colaborador, setColaborador] = useState<ColaboradorSimples | null>(null);
+
+  //TESTES 
+  useEffect(() => {
+    console.log("COABORADOR", colaborador);
+  }, [colaborador]);
+  
 
   // Função para carregar o colaborador a partir do id
   const fecthRegistros = async () => {
     try {
-      const response = await api.get(`/colaborador/id/${id}`);
+      const response = await api.get(`/colaborador/registros/${id}?page=${paginaAtual}&limit=${limite}`);
       console.log(response.data);
       if (response.data) {
-        setColaborador(response.data);
+        const colaborador = {
+          nome: String(nome),
+          numero: Number(numero), 
+          area: String(area),
+          vinculo: String(vinculo),
+          registros: response.data.registros as Registro[]
+        }
+        setColaborador(colaborador);
       }
     } catch (error) {
-      console.log("Erro ao buscar colaborador:", error);
+      console.log("Erro ao buscar Registros:", error);
     }
   };
 
