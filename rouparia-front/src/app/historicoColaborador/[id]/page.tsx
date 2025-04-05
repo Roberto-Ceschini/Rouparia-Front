@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import api from "@/services/axios";
 import HeaderHistorico from "@/components/HeaderHistoricoColaborador";
 import HeaderHistoricoColaborador from "@/components/HeaderHistoricoColaborador";
@@ -8,11 +8,19 @@ import TabelaRegistros from "@/components/TabelaRegistros";
 import { Colaborador } from "@/types/colaborador";
 
 export default function HistoricoColaborador() {
-  const { id } = useParams();
+  const params = useParams();
+  const searchParams = useSearchParams();
+
+  const id = params.id;
+  const nome = searchParams.get('nome');
+  const numero = searchParams.get('numero');
+  const area = searchParams.get('area');
+  const vinculo = searchParams.get('vinculo');
+
   const [colaborador, setColaborador] = useState<Colaborador | null>(null);
 
   // Função para carregar o colaborador a partir do id
-  const fetchColaborador = async () => {
+  const fecthRegistros = async () => {
     try {
       const response = await api.get(`/colaborador/id/${id}`);
       console.log(response.data);
@@ -26,7 +34,7 @@ export default function HistoricoColaborador() {
 
   // Carrega o colaborador ao abrir a página
   useEffect(() => {
-    fetchColaborador();
+    fecthRegistros();
   }, [id]);
 
   // Aguarda o carregamento do colaborador antes de renderizar

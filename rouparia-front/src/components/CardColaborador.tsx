@@ -152,6 +152,8 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
         }
     }
 
+    //TESTES
+    
     return (
         //Card do colaborador
         <div className="flex flex-col p-4 justify-evenly w-[80%] bg-cinza-claro shadow-md shadow-gray-900 rounded-xl md:w-[60%] lg:px-16">
@@ -223,7 +225,15 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
             </div>
             {/**Historico*/}
             <Link
-                href={`/historicoColaborador/${colaborador?.id}`}
+                href={{
+                    pathname: `/historicoColaborador/${colaborador?.id}`,
+                    query: {
+                      nome: colaborador?.nome,
+                      numero: colaborador?.numero,
+                      area: colaborador?.area?.nome,
+                      vinculo: colaborador?.vinculo?.nome,
+                    },
+                  }}
                 className='bg-white text-black flex justify-center items-center w-[100%] py-1.5 rounded-md font-poppins-regular hover:cursor-pointer shadow-neutral-900 shadow-sm'>
                 Ver histórico
             </Link>
