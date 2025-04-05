@@ -5,6 +5,7 @@ import Link from "next/link";
 import { use, useEffect, useState } from "react";
 import api from "@/services/axios";
 import path from "path";
+import { Registro } from "@/types/registro";
 
 interface CardColaboradorProps {
     colaborador: Colaborador | null;
@@ -22,11 +23,8 @@ const capitalize = (s: string) => {
 
 export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutorizado, setColaborador, setBotaoClicado, setMostrarPopUpSucesso }: CardColaboradorProps) {
 
-    // Filtra os registros para pegar apenas os válidos (retirou ou entregou)
-    const registrosValidos = colaborador?.registros.filter(r => r.status === "retirou" || r.status === "entregou");
-
     // Pegamos o último registro Válido desse colaborador
-    const ultimoRegistro = registrosValidos ? registrosValidos[registrosValidos.length - 1] : null;
+    const ultimoRegistro: Registro | null = colaborador?.registros ?? null;
     //Estado que controla o envio do formulário
     const [submitting, setSubmitting] = useState(false);
     const [quantidadeEntregar, setQuantidadeEntregar] = useState (1);
