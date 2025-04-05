@@ -6,6 +6,8 @@ import { use, useEffect, useState } from "react";
 import api from "@/services/axios";
 import path from "path";
 import { Registro } from "@/types/registro";
+import SvgButtonPlus from "./SvgButtonPlus";
+import SvgButtonMenos from "./SvgButtonMenos";
 
 interface CardColaboradorProps {
     colaborador: Colaborador | null;
@@ -201,16 +203,19 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
                     submitting={submitting} />
             </div>
 
-            <div className="flex flex-row">
-            <button className="border-2 border-red-500 p-1" onClick={subtrairEntrega}>
-                -
+            <div className="flex flex-row justify-around items-center font-semibold">
+            <p>
+                Quantidade Entregue:
+            </p>
+            <div className="flex flex-row items-center max-w-[40%] w-[30%] justify-around">
+            <button className=" p-2 rounded-full bg-verde-primario-hover cursor-pointer"  onClick={subtrairEntrega}>
+                <SvgButtonMenos/>
             </button>
-            <button>
-                Quantidade Entrega: {quantidadeEntregar}
+            <p>{quantidadeEntregar}</p>
+            <button className=" p-2 rounded-full bg-verde-primario-hover cursor-pointer" onClick={somarEntrega}>
+                <SvgButtonPlus/>
             </button>
-            <button className="border-2 border-red-500 p-1" onClick={somarEntrega}>
-                +
-            </button>
+            </div>
             </div>
             <div className="flex flex-row">
             <button className="border-2 border-red-500 p-1" onClick={subtrairRetirada}>
@@ -234,7 +239,7 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
                       vinculo: colaborador?.vinculo?.nome,
                     },
                   }}
-                className='bg-white text-black flex justify-center items-center w-[100%] py-1.5 rounded-md font-poppins-regular hover:cursor-pointer shadow-neutral-900 shadow-sm'>
+                className='bg-white text-black border border-gray-200 flex justify-center items-center w-[100%] py-1.5 rounded-md font-poppins-regular hover:cursor-pointer'>
                 Ver histórico
             </Link>
 
