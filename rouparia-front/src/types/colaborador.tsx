@@ -6,6 +6,7 @@ export type Colaborador = {
   id: number;
   numero: number;
   nome: string;
+  qtd_pendente: number;
   area_id?: number | null;
   area?: Area | null;
   vinculo_id?: number | null;

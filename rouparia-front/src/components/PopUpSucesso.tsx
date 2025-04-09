@@ -31,7 +31,7 @@ export default function PopUpSucesso({ handleTogglePopUp, colaborador, botaoClic
                 </div>
                 <button
                     onClick={handleTogglePopUp}
-                    className="mt-4 w-[100%] font-poppins-regular px-4 py-2 bg-verde-primario rounded-b-md text-white hover:bg-vermelho-hover transition">
+                    className="mt-4 w-[100%] font-poppins-regular px-4 py-2 bg-verde-primario rounded-b-md text-white hover:bg-verde-primario-hover transition">
                     Continuar
                 </button>
             </div>

@@ -9,9 +9,6 @@ interface PopUpNaoAutorizadoProps {
 }
 export default function PopUpNaoAutorizado ({colaborador, handleTogglePopUp, errorCode}: PopUpNaoAutorizadoProps) {
 
-    //Pega o último registro do colaborador
-    const lastRegistro = colaborador?.registros?.length ? colaborador.registros[colaborador.registros.length - 1] : null;
-
     //Formata a data, transforma a data para mostrar a hora e o dia locais (Brasília)
     const formatData = (data: string) => {
         const dataLocal = new Date(data).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });;
@@ -20,7 +17,7 @@ export default function PopUpNaoAutorizado ({colaborador, handleTogglePopUp, err
     }
     const mensagens = [
         "Não é possível realizar duas entregas seguidas, verifique se deseja uma entrega extra.",
-        "Colaborador possui pendencias",
+        `Colaborador possui ${colaborador?.qtd_pendente === 1 ? colaborador.qtd_pendente + ' pendência' :  colaborador?.qtd_pendente + ' pendências'}`,
         "A entrega deve ser exatamente igual à última retirada pendente."
     ]
     return (
