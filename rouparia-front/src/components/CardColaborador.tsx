@@ -8,6 +8,8 @@ import path from "path";
 import { Registro } from "@/types/registro";
 import SvgButtonPlus from "./SvgButtonPlus";
 import SvgButtonMenos from "./SvgButtonMenos";
+import SubtrairButton from "./SubtrairButton";
+import SomarButton from "./SomarButton";
 
 interface CardColaboradorProps {
     colaborador: Colaborador | null;
@@ -29,8 +31,8 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
     const ultimoRegistro: Registro | null = colaborador?.registros ?? null;
     //Estado que controla o envio do formulário
     const [submitting, setSubmitting] = useState(false);
-    const [quantidadeEntregar, setQuantidadeEntregar] = useState (1);
-    const [quantidadeRetirar, setQuantidadeRetirar] = useState (1);
+    const [quantidadeEntregar, setQuantidadeEntregar] = useState(1);
+    const [quantidadeRetirar, setQuantidadeRetirar] = useState(1);
 
     //Formata a data, transforma a data para mostrar a hora e o dia locais (Brasília)
     const formatData = (data: string) => {
@@ -39,20 +41,20 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
         return `${dataSplit}`;
     }
 
-    const somarEntrega = ()=>{
-        setQuantidadeEntregar (prev=>prev+1);
+    const somarEntrega = () => {
+        setQuantidadeEntregar(prev => prev + 1);
     }
-    const subtrairEntrega = ()=>{
-        if (quantidadeEntregar > 1) setQuantidadeEntregar (prev=>prev-1);
+    const subtrairEntrega = () => {
+        if (quantidadeEntregar > 1) setQuantidadeEntregar(prev => prev - 1);
     }
-    const somarRetirada = ()=>{
-        setQuantidadeRetirar (prev=>prev+1);
+    const somarRetirada = () => {
+        setQuantidadeRetirar(prev => prev + 1);
     }
 
-    const subtrairRetirada = ()=>{
-        if (quantidadeRetirar > 1) setQuantidadeRetirar (prev=>prev-1);
+    const subtrairRetirada = () => {
+        if (quantidadeRetirar > 1) setQuantidadeRetirar(prev => prev - 1);
     }
-    
+
 
     const entregar = async () => {
 
@@ -155,7 +157,7 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
     }
 
     //TESTES
-    
+
     return (
         //Card do colaborador
         <div className="flex flex-col p-4 justify-evenly w-[80%] bg-cinza-claro shadow-md shadow-gray-900 rounded-xl md:w-[60%] lg:px-16">
@@ -165,7 +167,7 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
 
             {/**Info colaborador*/}
             <h1 className="font-poppins-bold text-xl">{String(colaborador?.numero).padStart(3, '0')} - {colaborador?.nome}</h1>
-            <h2>Status: <span className={`${ultimoRegistro?.status === 'entregou'
+            <h2>Último status: <span className={`${ultimoRegistro?.status === 'entregou'
                 ? 'text-verde-terciario'
                 : 'text-vermelho'}`}>
                 {!ultimoRegistro
@@ -203,42 +205,37 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
                     submitting={submitting} />
             </div>
 
-            <div className="flex flex-row justify-around items-center font-semibold">
-            <p>
-                Quantidade Entregue:
-            </p>
-            <div className="flex flex-row items-center max-w-[40%] w-[30%] justify-around">
-            <button className=" p-2 rounded-full bg-verde-primario-hover cursor-pointer"  onClick={subtrairEntrega}>
-                <SvgButtonMenos/>
-            </button>
-            <p>{quantidadeEntregar}</p>
-            <button className=" p-2 rounded-full bg-verde-primario-hover cursor-pointer" onClick={somarEntrega}>
-                <SvgButtonPlus/>
-            </button>
+            {/*Selecionar quantidade entregue*/}
+            <div className="flex flex-row items-center font-semibold justify-between">
+                <p>Quantidade Entregue:</p>
+                <div className="flex flex-row items-center max-w-[40%] w-[25%] justify-between">
+                    <SubtrairButton onClick={subtrairEntrega} />
+                    <p>{quantidadeEntregar}</p>
+                    <SomarButton onClick={somarEntrega} />
+                </div>
             </div>
+            
+            {/*Selecionar quantidade Retirada*/}
+            <div className="flex flex-row items-center font-semibold mt-1.5 mb-3 justify-between">
+                <p>Quantidade Retirada:</p>
+                <div className="flex flex-row items-center max-w-[40%] w-[25%] justify-between">
+                    <SubtrairButton onClick={subtrairRetirada} />
+                    <p>{quantidadeRetirar}</p>
+                    <SomarButton onClick={somarRetirada} />
+                </div>
             </div>
-            <div className="flex flex-row">
-            <button className="border-2 border-red-500 p-1" onClick={subtrairRetirada}>
-                -
-            </button>
-            <button>
-                Quantidade Retirada: {quantidadeRetirar}
-            </button>
-            <button className="border-2 border-red-500 p-1" onClick={somarRetirada}>
-                +
-            </button>
-            </div>
+
             {/**Historico*/}
             <Link
                 href={{
                     pathname: `/historicoColaborador/${colaborador?.id}`,
                     query: {
-                      nome: colaborador?.nome,
-                      numero: colaborador?.numero,
-                      area: colaborador?.area?.nome,
-                      vinculo: colaborador?.vinculo?.nome,
+                        nome: colaborador?.nome,
+                        numero: colaborador?.numero,
+                        area: colaborador?.area?.nome,
+                        vinculo: colaborador?.vinculo?.nome,
                     },
-                  }}
+                }}
                 className='bg-white text-black border border-gray-200 flex justify-center items-center w-[100%] py-1.5 rounded-md font-poppins-regular hover:cursor-pointer'>
                 Ver histórico
             </Link>
