@@ -10,6 +10,8 @@ import SvgButtonPlus from "./SvgButtonPlus";
 import SvgButtonMenos from "./SvgButtonMenos";
 import SubtrairButton from "./SubtrairButton";
 import SomarButton from "./SomarButton";
+import { useRouter } from "next/navigation";
+import { useColaboradorContext } from "@/contexts/colaboradorContext";
 
 interface CardColaboradorProps {
     colaborador: Colaborador | null;
@@ -28,6 +30,8 @@ const capitalize = (s: string) => {
 export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutorizado, setColaborador, setBotaoClicado, setMostrarPopUpSucesso }: CardColaboradorProps) {
 
     // Pegamos o último registro Válido desse colaborador
+    const router = useRouter();
+    
     const ultimoRegistro: Registro | null = colaborador?.registros ?? null;
     //Estado que controla o envio do formulário
     const [submitting, setSubmitting] = useState(false);
@@ -156,14 +160,30 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
         }
     }
 
+    const verHistorico = ()=>{
+        router.push(`/historicoColaborador/${colaborador?.id}`);
+    }
+
+    const {setColaboradorContext} = useColaboradorContext();
+
+    const voltar = () =>{
+        setColaboradorContext ({
+            nome: null,
+            numero: null,
+            area: null,
+            vinculo: null,
+        })
+        setColaborador(null);
+    }
+
     //TESTES
 
     return (
         //Card do colaborador
-        <div className="flex flex-col p-4 justify-evenly w-[80%] bg-cinza-claro shadow-md shadow-gray-900 rounded-xl md:w-[60%] lg:px-16">
+        <div className="flex flex-col p-4 5xl:p-2 justify-evenly w-[90%] bg-cinza-claro shadow-md shadow-gray-900 rounded-xl md:w-[70%] lg:px-16">
 
             {/**Voltar*/}
-            <button className=" w-8 h-8 flex justify-center items-center hover:cursor-pointer" onClick={() => { setColaborador(null) }}><SvgSetaVoltar /></button>
+            <button className=" w-8 h-8 flex justify-center items-center hover:cursor-pointer" onClick={() => voltar()}><SvgSetaVoltar /></button>
 
             {/**Info colaborador*/}
             <h1 className="font-poppins-bold text-xl">{String(colaborador?.numero).padStart(3, '0')} - {colaborador?.nome}</h1>
@@ -172,7 +192,11 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
                 : 'text-vermelho'}`}>
                 {!ultimoRegistro
                     ? 'Usuario sem registro'
-                    : capitalize(ultimoRegistro?.status) + ' em ' + formatData(ultimoRegistro?.data)}</span></h2>
+                    : capitalize(ultimoRegistro?.status) + ` ${ultimoRegistro.quantidade === 1 ?
+                     `${ultimoRegistro.quantidade} uniforme` : `${ultimoRegistro.quantidade} uniformes`}` 
+                     + ' em ' 
+                     + formatData(ultimoRegistro?.data)}
+                     </span></h2>
 
             {/**Acoes*/}
             <div className="flex flex-col h-[30vh] justify-center gap-4">
@@ -226,19 +250,11 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
             </div>
 
             {/**Historico*/}
-            <Link
-                href={{
-                    pathname: `/historicoColaborador/${colaborador?.id}`,
-                    query: {
-                        nome: colaborador?.nome,
-                        numero: colaborador?.numero,
-                        area: colaborador?.area?.nome,
-                        vinculo: colaborador?.vinculo?.nome,
-                    },
-                }}
+            <button
+                onClick={verHistorico}
                 className='bg-white text-black border border-gray-200 flex justify-center items-center w-[100%] py-1.5 rounded-md font-poppins-regular hover:cursor-pointer'>
                 Ver histórico
-            </Link>
+            </button>
 
         </div>
     );

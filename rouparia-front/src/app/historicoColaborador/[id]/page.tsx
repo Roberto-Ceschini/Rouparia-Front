@@ -1,23 +1,19 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams} from "next/navigation";
 import api from "@/services/axios";
 import HeaderHistoricoColaborador from "@/components/HeaderHistoricoColaborador";
 import TabelaRegistros from "@/components/TabelaRegistros";
 import { ColaboradorSimples } from "@/types/colaboradorSimplificado";
 import { Registro } from "@/types/registro";
+import { useColaboradorContext } from "@/contexts/colaboradorContext";
 
 export default function HistoricoColaborador() {
   //Pegar dados da Url
   const params = useParams(); //Esse cara pega o []
-  const searchParams = useSearchParams(); //Esse cara pega as querys
 
   //Parametros da URL
   const id = params.id;
-  const nome = searchParams.get('nome');
-  const numero = searchParams.get('numero');
-  const area = searchParams.get('area');
-  const vinculo = searchParams.get('vinculo');
 
   //Paginacao
   const [paginaAtual, setPaginaAtual] = useState(1);
@@ -28,16 +24,16 @@ export default function HistoricoColaborador() {
 
   //Colaborador
   const [colaborador, setColaborador] = useState<ColaboradorSimples | null>(null);
+  const {colaborador_context} = useColaboradorContext();
 
   //TESTES 
   useEffect(() => {
-    console.log("COABORADOR", colaborador);
-  }, [colaborador]);
+    console.log("COABORADOR", colaborador_context);
+  }, [colaborador_context]);
 
 
   //PAGINACAO
   const mudarPagina = (pagina: number | null)=>{
-    console.log("pagine", pagina)
     if (pagina) setPaginaAtual (pagina);
     else return;
   }
@@ -51,10 +47,10 @@ export default function HistoricoColaborador() {
       console.log(response.data);
       if (response.data) {
         const colaborador = {
-          nome: String(nome),
-          numero: Number(numero),
-          area: String(area),
-          vinculo: String(vinculo),
+          nome: String(colaborador_context.nome),
+          numero: Number(colaborador_context.numero),
+          area: String(colaborador_context.area),
+          vinculo: String(colaborador_context.vinculo),
           registros: response.data.registros as Registro[]
         }
         setColaborador(colaborador);
@@ -81,9 +77,9 @@ export default function HistoricoColaborador() {
   //Pagina principal
   return (
     //Body
-    <div className="flex flex-col w-[100vw] h-[100vh] items-center">
+    <div className="flex flex-col w-[100vw] h-[100vh] items-center overflow-y-auto">
       {/**Header*/}
-      <HeaderHistoricoColaborador />
+      <HeaderHistoricoColaborador nColaborador={colaborador.numero}/>
   
       {/**Tabela de Registros*/}
       <div className="mt-10 w-[100%] flex justify-center">
@@ -91,7 +87,7 @@ export default function HistoricoColaborador() {
       </div>
 
       {/**Mudar de pagina */}
-      <div className="flex flex-row mt-4 gap-4">
+      <div className="flex flex-row mt-4 gap-4 pb-2">
         <button className="font-bold cursor-pointer" onClick={()=>mudarPagina(prevPage)}>{'<'}</button>
         <p>Página {paginaAtual} de {totalPages}</p>
         <button className="font-bold cursor-pointer" onClick={()=>mudarPagina (nextPage)}>{'>'}</button>

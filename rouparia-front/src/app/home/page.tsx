@@ -5,6 +5,7 @@ import PopUpNaoAutorizado from "@/components/PopNaoAutorizado";
 import PopUpSucesso from "@/components/PopUpSucesso";
 import PopUpUsuarioNaoEncontrado from "@/components/PopUpUsuarioNaoEncontrado";
 import SubmitButton from "@/components/SubmitButton";
+import { useColaboradorContext } from "@/contexts/colaboradorContext";
 import api from "@/services/axios";
 import { Colaborador } from "@/types/colaborador";
 import axios from "axios";
@@ -13,6 +14,9 @@ import { use, useEffect, useState } from "react";
 import * as Yup from 'yup';
 
 export default function Home() {
+
+  //Pega o numero do colaborador via context (Pagina de historicos)
+  const {setColaboradorContext, colaborador_context} = useColaboradorContext();
 
   const [colaborador, setColaborador] = useState<Colaborador | null>(null);//Estado que controla o colaborador
 
@@ -47,11 +51,18 @@ export default function Home() {
       const response = await api.get(`colaborador/numero/${nColaborador}`);
       console.log(response);
       if (response) {
-        const colaborador = response.data;
+        const colaborador: Colaborador = response.data;
         setColaborador(colaborador);
+        setColaboradorContext({
+          numero: String(colaborador.numero),
+          nome: colaborador.nome,
+          area: colaborador.area?.nome,
+          vinculo: colaborador.vinculo?.nome
+        });
       }
     } catch (error) {
       console.log(error);
+
       setMostrarPopUpNaoEncontrado(true);
     }
   }
@@ -70,8 +81,8 @@ export default function Home() {
     "2xl": 1536,
   };
 
+   //Lida com o tamanho da tela
   const [tamanhoTela, setTamanhoTela] = useState<number>(0);
-
   useEffect(() => {
     const handleResize = () => {
       setTamanhoTela(window.innerWidth);
@@ -88,6 +99,12 @@ export default function Home() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  //Verifica se o colaborador tem um numero (Pagina de historicos)
+  useEffect (()=>{
+    if (colaborador_context.numero) fetchColaborador(Number(colaborador_context.numero))
+    else return;
+  }, [])
 
   return (
 
@@ -135,7 +152,7 @@ export default function Home() {
                 </Form>
               </Formik>
             </div></>
-        ) : (<div className="md:hidden">
+        ) : (<div className="items-center justify-center flex md:hidden">
           <CardColaborador
             colaborador={colaborador}
             setColaborador={setColaborador}
