@@ -29,10 +29,6 @@ export const ColaboradorProvider = ({ children }: { children: ReactNode }) => {
   };
 
   //TESTES
-  useEffect(()=>{
-    console.log("COLABORADR\n", colaborador_context);
-  }, [colaborador_context])
-
   return (
     <ColaboradorContext.Provider value={{ colaborador_context, setColaboradorContext }}>
       {children}

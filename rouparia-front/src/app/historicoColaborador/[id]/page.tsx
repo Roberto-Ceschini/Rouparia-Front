@@ -28,7 +28,6 @@ export default function HistoricoColaborador() {
 
   //TESTES 
   useEffect(() => {
-    console.log("COABORADOR", colaborador_context);
   }, [colaborador_context]);
 
 
@@ -43,8 +42,6 @@ export default function HistoricoColaborador() {
   const fecthRegistros = async () => {
     try {
       const response = await api.get(`/colaborador/registros/${id}?page=${paginaAtual}&limit=${limite}`);
-      console.log("Resposta", response)
-      console.log(response.data);
       if (response.data) {
         const colaborador = {
           nome: String(colaborador_context.nome),
@@ -60,7 +57,7 @@ export default function HistoricoColaborador() {
         setPaginaAtual(response.data.currentPage);
       }
     } catch (error) {
-      console.log("Erro ao buscar Registros:", error);
+      alert("Erro ao buscar registro! Tente novamente mais tarde")
     }
   };
 

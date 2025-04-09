@@ -10,7 +10,6 @@ interface props {
 
 export default function HeaderHistoricoColaborador({nColaborador}:props) {
     const router = useRouter();
-    console.log("Numero do colaborador", nColaborador);
 
     const voltar = ()=>{
         router.back();

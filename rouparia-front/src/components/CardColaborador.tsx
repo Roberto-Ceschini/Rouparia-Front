@@ -62,11 +62,9 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
 
     const entregar = async () => {
 
-        console.log("ESTOU ENTREGANDO")
         try {
             setBotaoClicado('entregar');
             setSubmitting(true);
-            console.log("ID COLABORADOR", colaborador?.id)
             const response = await api.post('/registro', {
                 colaborador_id: colaborador?.id,
                 status: 'entregou',
@@ -80,21 +78,17 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
                 setSubmitting(false);
                 setMostrarPopUpSucesso(true);
             }
-            console.log(response);
             setSubmitting(false);
         } catch (error) {
             setSubmitting(false);
-            console.log(error);
         }
     }
 
     const entregaExtra = async () => {
 
-        console.log("ESTOU ENTREGANDO")
         try {
             setBotaoClicado('entregar');
             setSubmitting(true);
-            console.log("ID COLABORADOR", colaborador?.id)
             const response = await api.post('/registro', {
                 colaborador_id: colaborador?.id,
                 status: 'entrega extra',
@@ -108,11 +102,10 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
                 setSubmitting(false);
                 setMostrarPopUpSucesso(true);
             }
-            console.log(response);
             setSubmitting(false);
         } catch (error) {
             setSubmitting(false);
-            console.log(error);
+            alert(error);
         }
     }
 
@@ -126,7 +119,6 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
                 quantidade: quantidadeRetirar
 
             });
-            console.log(response.data);
             if (response.data.message === 'error') {
                 setSubmitting(false);
                 const errorCode = response.data.code
@@ -137,7 +129,7 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
             }
         } catch (error) {
             setSubmitting(false);
-            console.log(error);
+            alert(error);
         }
     }
 
@@ -149,14 +141,13 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
             await entregar();
 
         } catch (error) {
-            if (!error) console.log("É NUM TEVE ERRO")
-            console.log(error)
+            alert(error)
         }
 
         try {
             await retirar();
         } catch (error) {
-            console.log(error)
+            alert(error)
         }
     }
 

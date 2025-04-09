@@ -11,9 +11,7 @@ interface PopUpSucessoProps {
 const mensagens = ["Uniforme Entregue", "Uniforme Retirado", "Uniforme Entregue e Retirado"];
 
 export default function PopUpSucesso({ handleTogglePopUp, colaborador, botaoClicado }: PopUpSucessoProps) {
-    useEffect(()=>{
-        console.log("BOTAO: ", botaoClicado)
-    }, [botaoClicado])
+   
     return (
 
         <div className="absolute z-10 inset-0 bg-black/50 flex justify-center items-center">

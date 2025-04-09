@@ -12,7 +12,6 @@ const mensagens = ["Uniforme Entregue", "Uniforme Retirado", "Uniforme Entregue 
 
 export default function PopUpErro({ handleTogglePopUp, colaborador, botaoClicado }: PopUpSucessoProps) {
     useEffect(()=>{
-        console.log("BOTAO: ", botaoClicado)
     }, [botaoClicado])
     return (
 

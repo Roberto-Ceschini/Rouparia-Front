@@ -49,7 +49,6 @@ export default function Home() {
     setNColaborador(nColaborador);
     try {
       const response = await api.get(`colaborador/numero/${nColaborador}`);
-      console.log(response);
       if (response) {
         const colaborador: Colaborador = response.data;
         setColaborador(colaborador);
@@ -61,8 +60,7 @@ export default function Home() {
         });
       }
     } catch (error) {
-      console.log(error);
-
+      alert(error);
       setMostrarPopUpNaoEncontrado(true);
     }
   }
