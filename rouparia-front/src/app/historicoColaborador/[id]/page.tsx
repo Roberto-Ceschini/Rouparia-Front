@@ -76,7 +76,7 @@ export default function HistoricoColaborador() {
     //Body
     <div className="flex flex-col w-[100vw] h-[100vh] items-center overflow-y-auto">
       {/**Header*/}
-      <HeaderHistoricoColaborador nColaborador={colaborador.numero}/>
+      <HeaderHistoricoColaborador/>
   
       {/**Tabela de Registros*/}
       <div className="mt-10 w-[100%] flex justify-center">

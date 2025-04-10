@@ -10,6 +10,7 @@ import api from "@/services/axios";
 import { Colaborador } from "@/types/colaborador";
 import axios from "axios";
 import { Form, Formik } from "formik";
+import Link from "next/link";
 import { use, useEffect, useState } from "react";
 import * as Yup from 'yup';
 
@@ -168,6 +169,8 @@ export default function Home() {
           setMostrarPopUpNaoAutorizado={handlePopUpNaoAutorizado}
           setMostrarPopUpSucesso={setMostrarPopUpSucesso}
           setBotaoClicado={setBotaoClicado} />}
+
+          <Link href={'/pendencias'} className="p-2 bg-amber-300">Pendencias</Link>
       </div>
     </div>
   );
