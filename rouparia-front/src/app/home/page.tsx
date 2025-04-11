@@ -4,11 +4,11 @@ import FormInput from "@/components/FormInput";
 import PopUpNaoAutorizado from "@/components/PopNaoAutorizado";
 import PopUpSucesso from "@/components/PopUpSucesso";
 import PopUpUsuarioNaoEncontrado from "@/components/PopUpUsuarioNaoEncontrado";
+import SairButton from "@/components/SairButton";
 import SubmitButton from "@/components/SubmitButton";
 import { useColaboradorContext } from "@/contexts/colaboradorContext";
 import api from "@/services/axios";
 import { Colaborador } from "@/types/colaborador";
-import axios from "axios";
 import { Form, Formik } from "formik";
 import Link from "next/link";
 import { use, useEffect, useState } from "react";
@@ -114,7 +114,7 @@ export default function Home() {
       {mostrarPopUpSucesso && <PopUpSucesso colaborador={colaborador} botaoClicado={botaoClicao} handleTogglePopUp={handleTogglePopUpSucesso} />}
 
       {/**Background Verde*/}
-      <div className="flex w-[100vw] h-[100vh] bg-verde-primario justify-center items-center md:w-[50vw]">
+      <div className="flex flex-col w-[100vw] h-[100vh] bg-verde-primario justify-center items-center md:w-[50vw]">
         {(!colaborador) ? (
           <>
             {/**Caixa Formulario*/}

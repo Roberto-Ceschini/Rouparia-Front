@@ -119,7 +119,7 @@ export default function Pendencias() {
         <div className="flex flex-col w-[100vw] h-[100vh] items-center overflow-y-auto">
 
             {/**Header*/}
-            <HeaderHistoricoColaborador isPendencias={true} />
+            <HeaderHistoricoColaborador tipo="pendencias" />
 
             {/**Tabela*/}
             <div className="mt-10 w-[100%] flex justify-center">
@@ -127,7 +127,7 @@ export default function Pendencias() {
             </div>
 
             {/**Gerar Excel*/}
-            <div className="w-[30%] mt-4">
+            <div className="w-[40%] lg:w-[30%] mt-4">
                 <ServiceButton name="Gerar relatório" textColor="white" color="laranja" hoverColor="laranja-hover" onClickFunction={gerarRelatorio} />
             </div>
 
