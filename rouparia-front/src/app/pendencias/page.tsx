@@ -1,5 +1,6 @@
 "use client"
 import HeaderHistoricoColaborador from "@/components/HeaderHistoricoColaborador";
+import ServiceButton from "@/components/ServiceButton";
 import TabelaRegistrosPendentes from "@/components/TabelaRegistrosPendentes";
 import api from "@/services/axios";
 import { ColaboradorSimples } from "@/types/colaboradorSimplificado";
@@ -73,6 +74,32 @@ export default function Pendencias() {
         router.push(`/historicoColaborador/${idColaborador}`);
     }
 
+    const gerarRelatorio = async () => {
+
+        try {
+            // 1. Fazer a requisição com responseType 'blob'
+            const response = await api.get('colaborador/gerarExcel', {
+                responseType: 'blob', // Isso é crucial!
+            });
+
+            // 2. Criar um link temporário para download
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'colaboradores_pendentes.xlsx'); // Nome do arquivo
+            document.body.appendChild(link);
+
+            // 3. Disparar o download
+            link.click();
+
+            // 4. Limpeza (opcional)
+            link.parentNode?.removeChild(link);
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('Erro ao baixar o arquivo:', error);
+        }
+    }
+
     //-------------------CARREGAR INFORMACOES------------------
     useEffect(() => {
 
@@ -97,6 +124,11 @@ export default function Pendencias() {
             {/**Tabela*/}
             <div className="mt-10 w-[100%] flex justify-center">
                 <TabelaRegistrosPendentes colaboradores={colaboradores} />
+            </div>
+
+            {/**Gerar Excel*/}
+            <div className="w-[30%] mt-4">
+                <ServiceButton name="Gerar relatório" textColor="white" color="laranja" hoverColor="laranja-hover" onClickFunction={gerarRelatorio} />
             </div>
 
             {/**Mudar de pagina */}
