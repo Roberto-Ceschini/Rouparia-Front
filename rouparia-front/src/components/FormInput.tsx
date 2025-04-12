@@ -26,9 +26,9 @@ export default function FormInput({ name, placeholder, label, isErrorVisible = t
                     name={name}
                     type={name}
                     placeholder={placeholder}
-                    className={`bg-[#F6F6F6] rounded-md ${name === 'nColaborador' ? 'pl-3' : 'pl-9'} py-1.5 w-[100%] text-sm`}
+                    className={`bg-[#F6F6F6] rounded-md ${name === 'password' ? 'pl-9' : name === 'email' ? 'pl-9' : 'pl-3'} py-1.5 w-[100%] text-sm`}
                 />
-                {name === 'email' ? inputIcons[0]() : name === 'nColaborador' ? '' : inputIcons[1]()}
+                {name === 'email' ? inputIcons[0]() : name === 'password' ? inputIcons[1]() : '' }
             </div>
             {isErrorVisible && (
                 <p className='text-vermelho text-sm'><ErrorMessage name={name} /></p>
