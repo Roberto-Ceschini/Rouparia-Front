@@ -1,5 +1,6 @@
 "use client";
 import FormInput from "@/components/FormInput";
+import FormInputSelect from "@/components/FormInputSelect";
 import HeaderHistoricoColaborador from "@/components/HeaderHistoricoColaborador";
 import SubmitButton from "@/components/SubmitButton";
 import { Form, Formik } from "formik";
@@ -27,7 +28,7 @@ export default function CadastrarColaborador() {
       {/**Conteudo principal*/}
       <div className="flex border-2 w-[100%] h-[100%] justify-center items-center">
         {/**Caixa Formulario*/}
-        <div className="flex flex-col p-2 gap-4 justify-evenly w-[80%] bg-verde-terciario rounded-xl md:w-[30%] lg:px-16 lg:py-20">
+        <div className="flex flex-col p-2 gap-4 justify-evenly w-[80%] bg-verde-terciario rounded-xl lg:py-8 md:w-[30%] lg:px-16">
           {/**Texto Login*/}
           <h1 className="font-bold text-center font-poppins-semi-bold text-xl md:text-2xl">
             Cadastro
@@ -41,6 +42,11 @@ export default function CadastrarColaborador() {
               nColaborador: Yup.number()
                 .typeError("Por favor, digite um número válido!")
                 .required("Por favor, digite o número do colaborador!"),
+                nome: Yup.string()
+                .typeError("Por favor, digite uma string válida!")
+                .required("Por favor, digite o nome do colaborador!"),
+                quantidaadePendente: Yup.number()
+                .typeError("Por favor, digite um número válido!")
             })}
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
@@ -70,19 +76,21 @@ export default function CadastrarColaborador() {
               />
 
               {/**Area*/}
-              <FormInput
+              <FormInputSelect
                 name="area"
                 placeholder="Produção"
                 label="Área"
                 isErrorVisible={isErrorVisible}
+                isArea={true}
               />
 
               {/**Vinculo*/}
-              <FormInput
+              <FormInputSelect
                 name="vinculo"
                 placeholder="Estudante"
                 label="Vínculo"
                 isErrorVisible={isErrorVisible}
+                isVinculo={true}
               />
 
                 {/**Quantidade pendente*/}

@@ -7,7 +7,8 @@ interface FormInputProps {
     placeholder: string; //Texto que aparece dentro do input
     label: string; //Texto que aparece acima do input
     isErrorVisible?: boolean; //Se o erro é visivel ou não
-    obrigatorio?: boolean
+    obrigatorio?: boolean;
+    isArea?: boolean;
 }
 
 //Array que contem os icones dos inputs
@@ -27,7 +28,9 @@ export default function FormInput({ name, placeholder, label, isErrorVisible = t
                     type={name}
                     placeholder={placeholder}
                     className={`bg-[#F6F6F6] rounded-md ${name === 'password' ? 'pl-9' : name === 'email' ? 'pl-9' : 'pl-3'} py-1.5 w-[100%] text-sm`}
-                />
+                >
+                    
+                </Field>
                 {name === 'email' ? inputIcons[0]() : name === 'password' ? inputIcons[1]() : '' }
             </div>
             {isErrorVisible && (
