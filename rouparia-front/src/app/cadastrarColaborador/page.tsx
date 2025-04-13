@@ -5,6 +5,7 @@ import HeaderHistoricoColaborador from "@/components/HeaderHistoricoColaborador"
 import SubmitButton from "@/components/SubmitButton";
 import api from "@/services/axios";
 import { Area } from "@/types/area";
+import { Colaborador } from "@/types/colaborador";
 import { Vinculo } from "@/types/vinculo";
 import { Form, Formik } from "formik";
 import { useEffect, useRef, useState } from "react";
@@ -43,8 +44,19 @@ export default function CadastrarColaborador() {
     }
   }
 
-  const cadastrarColaborador = (values: any) => {};
-
+  const cadastrarColaborador = async (values: any) => {
+    try{
+        const response = await api.post('/colaborador', values);
+        const colaborador: Colaborador = response.data
+        if (response) alert(`
+          **SUCESSO NO CADASTRO**\n
+          NOME: ${colaborador.nome}
+          NÚMERO: ${colaborador.numero}`);
+    }catch(error:any){
+        console.log("ERRO-", error)
+        alert (`Erro ${error.response.data.statusCode} ao cadastrar colaborador\n\n${error.response.data.message}`);
+    }
+  }
   //Carrega os recursos iniciais da pagina
   useEffect (()=>{
 
@@ -55,6 +67,12 @@ export default function CadastrarColaborador() {
     carregarRecursos();
 
   }, [])
+
+  //----------TESTES----------
+  useEffect(()=>{
+    console.log("VINCULOS", vinculos)
+    console.log("Areas", areas)
+  },[vinculos, areas])
 
   return (
     //Body
@@ -73,22 +91,49 @@ export default function CadastrarColaborador() {
           {/**Formulario*/}
           <Formik
             initialValues={{
-              nColaborador: "",
+              numero: 0,
+              nome: "",
+              qtd_pendente: 0,
+              area_id: undefined,
+              vinculo_id: undefined,
             }}
             validationSchema={Yup.object({
-              nColaborador: Yup.number()
+              numero: Yup.number()
                 .typeError("Por favor, digite um número válido!")
                 .required("Por favor, digite o número do colaborador!"),
                 nome: Yup.string()
                 .typeError("Por favor, digite uma string válida!")
                 .required("Por favor, digite o nome do colaborador!"),
-                quantidaadePendente: Yup.number()
+                qtd_pendente: Yup.number()
                 .typeError("Por favor, digite um número válido!")
             })}
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
+                //Verifica se a area esta como undefined, se sim, retorna, automaticamente, a primeira area
+                const verificarAreaUndefined = ()=>{
+                  console.log("AREA SELECIONADA-", values.area_id)
+                  if (values.area_id === undefined){
+                      if (areas) return Number(areas[0].id);
+                  }
+                  else return Number(values.area_id);
+                }
+                //Verifica se o vinculo esta como undefined, se sim, retorna, automaticamente, o primeiro vinculo
+                const verificarVinculoUndefined = ()=>{
+                  console.log("VINCULO SELECIONADA-", values.vinculo_id)
+                  if (values.vinculo_id === undefined){
+                    if (vinculos) return Number(vinculos[0].id);
+                  }
+                else return Number(values.vinculo_id);
+                }
+                const formattedValues = {
+                    ...values,
+                    numero: Number(values.numero),
+                    qtd_pendente: Number(values.qtd_pendente),
+                    area_id: verificarAreaUndefined(),
+                    vinculo_id: verificarVinculoUndefined(),
+                  };
                 setSubmitting(false); //Desabilita o botão de submit
-                cadastrarColaborador(values); //Busca o colaborador
+                cadastrarColaborador(formattedValues); //Busca o colaborador
               }, 400);
             }}
           >
@@ -96,7 +141,7 @@ export default function CadastrarColaborador() {
 
               {/**N do colaborador*/}
               <FormInput
-                name="nColaborador"
+                name="numero"
                 placeholder="Exemplo: 001"
                 label="Número"
                 obrigatorio={true}
@@ -114,8 +159,8 @@ export default function CadastrarColaborador() {
 
               {/**Area*/}
               <FormInputSelect
-                name="area"
-                placeholder="Produção"
+                name="area_id"
+                placeholder="Área"
                 label="Área"
                 isErrorVisible={isErrorVisible}
                 opcoes ={areas}
@@ -124,19 +169,11 @@ export default function CadastrarColaborador() {
 
               {/**Vinculo*/}
               <FormInputSelect
-                name="vinculo"
+                name="vinculo_id"
                 placeholder="Estudante"
                 label="Vínculo"
                 isErrorVisible={isErrorVisible}
                 opcoes={vinculos}
-              />
-
-                {/**Quantidade pendente*/}
-              <FormInput
-                name="quantidadePendente"
-                placeholder="0"
-                label="Quantidade Pendente"
-                isErrorVisible={isErrorVisible}
               />
 
               {/**Submit*/}

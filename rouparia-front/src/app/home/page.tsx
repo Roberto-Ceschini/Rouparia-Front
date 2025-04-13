@@ -1,6 +1,7 @@
 "use client"
 import CardColaborador from "@/components/CardColaborador";
 import FormInput from "@/components/FormInput";
+import HeaderHistoricoColaborador from "@/components/HeaderHistoricoColaborador";
 import PopUpNaoAutorizado from "@/components/PopNaoAutorizado";
 import PopUpSucesso from "@/components/PopUpSucesso";
 import PopUpUsuarioNaoEncontrado from "@/components/PopUpUsuarioNaoEncontrado";
@@ -61,7 +62,6 @@ export default function Home() {
         });
       }
     } catch (error) {
-      alert(error);
       setMostrarPopUpNaoEncontrado(true);
     }
   }
@@ -107,6 +107,8 @@ export default function Home() {
 
   return (
 
+    <>
+    <HeaderHistoricoColaborador tipo="home"/>
     <div className="flex flex-col md:flex-row">
       {/**PopUps*/}
       {mostrarPopUpNaoEncontrado && <PopUpUsuarioNaoEncontrado numero={nColaborador} handleTogglePopUp={() => setMostrarPopUpNaoEncontrado(false)} />}
@@ -114,7 +116,7 @@ export default function Home() {
       {mostrarPopUpSucesso && <PopUpSucesso colaborador={colaborador} botaoClicado={botaoClicao} handleTogglePopUp={handleTogglePopUpSucesso} />}
 
       {/**Background Verde*/}
-      <div className="flex flex-col w-[100vw] h-[100vh] bg-verde-primario justify-center items-center md:w-[50vw]">
+      <div className="flex flex-col w-[100vw] h-[90vh] bg-verde-primario justify-center items-center md:w-[50vw]">
         {(!colaborador) ? (
           <>
             {/**Caixa Formulario*/}
@@ -162,16 +164,15 @@ export default function Home() {
       </div>
 
       {/**Background Branco*/}
-      <div className="hidden md:flex w-[50vw] h-[100vh] justify-center items-center">
+      <div className="hidden md:flex w-[50vw] h-[90vh] justify-center items-center">
         {colaborador && <CardColaborador
           colaborador={colaborador}
           setColaborador={setColaborador}
           setMostrarPopUpNaoAutorizado={handlePopUpNaoAutorizado}
           setMostrarPopUpSucesso={setMostrarPopUpSucesso}
           setBotaoClicado={setBotaoClicado} />}
-
-          <Link href={'/pendencias'} className="p-2 bg-amber-300">Pendencias</Link>
       </div>
     </div>
+    </>
   );
 }
