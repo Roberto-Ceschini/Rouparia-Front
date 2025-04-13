@@ -3,13 +3,21 @@ import FormInput from "@/components/FormInput";
 import FormInputSelect from "@/components/FormInputSelect";
 import HeaderHistoricoColaborador from "@/components/HeaderHistoricoColaborador";
 import SubmitButton from "@/components/SubmitButton";
+import api from "@/services/axios";
+import { Area } from "@/types/area";
+import { Vinculo } from "@/types/vinculo";
 import { Form, Formik } from "formik";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as Yup from "yup";
 
 export default function CadastrarColaborador() {
-  const [isErrorVisible, setIsErrorVisible] = useState(true); //Estado que controla a visibilidade do erro
 
+ //------------VARIAVEIS----------
+  const [isErrorVisible, setIsErrorVisible] = useState(true); //Estado que controla a visibilidade do erro
+  const [areas, setAreas] = useState <null | Area[]> (null) //Areas que serao exibidas no dropDown
+  const [vinculos, setVinculos] = useState <null | Vinculo[]>(null) //Vinculos que serao exibidas no dropDown
+
+  //-------------FUNCOES----------
   //Função que mostra o erro e depois de 4 segundos esconde
   const handleShowError = () => {
     setTimeout(() => {
@@ -17,7 +25,36 @@ export default function CadastrarColaborador() {
     }, 4000);
   };
 
+  const fetchAreas = async ()=>{
+    try{
+        const response = await api.get('/area');
+        if (response.data) setAreas (response.data);
+    }catch(error){
+        alert (`Erro ao carregar áreas, recarregue a página\n${error}`);
+    }
+  }
+
+  const fetchVinculos = async ()=>{
+    try{
+        const response = await api.get ('/vinculo')
+        if (response.data) setVinculos(response.data);
+    }catch(error){
+        alert (`Erro ao carregar Vinculos, recarregue a página\n${error}`);
+    }
+  }
+
   const cadastrarColaborador = (values: any) => {};
+
+  //Carrega os recursos iniciais da pagina
+  useEffect (()=>{
+
+    const carregarRecursos = async ()=>{
+        await fetchVinculos();
+        await fetchAreas ();
+    }
+    carregarRecursos();
+
+  }, [])
 
   return (
     //Body
@@ -81,7 +118,8 @@ export default function CadastrarColaborador() {
                 placeholder="Produção"
                 label="Área"
                 isErrorVisible={isErrorVisible}
-                isArea={true}
+                opcoes ={areas}
+                
               />
 
               {/**Vinculo*/}
@@ -90,7 +128,7 @@ export default function CadastrarColaborador() {
                 placeholder="Estudante"
                 label="Vínculo"
                 isErrorVisible={isErrorVisible}
-                isVinculo={true}
+                opcoes={vinculos}
               />
 
                 {/**Quantidade pendente*/}

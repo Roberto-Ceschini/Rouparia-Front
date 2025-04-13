@@ -1,6 +1,8 @@
 import { ErrorMessage, Field } from "formik";
 import SvgCaixaEmail from "./SvgCaixaEmail";
 import SvgCadeado from "./SvgCadeado";
+import { Area } from "@/types/area";
+import { Vinculo } from "@/types/vinculo";
 
 interface FormInputProps {
   name: string; //Nome do input
@@ -8,7 +10,7 @@ interface FormInputProps {
   label: string; //Texto que aparece acima do input
   isErrorVisible?: boolean; //Se o erro é visivel ou não
   obrigatorio?: boolean;
-  opcoes:string[]
+  opcoes:Area[] | Vinculo[] | null;
 }
 
 //Array que contem os icones dos inputs
@@ -44,8 +46,10 @@ export default function FormInput({
           } py-1.5 w-[100%] text-sm`}
           component="select"
         >
-        {opcoes.map(opcao =>{
-            <option value={minuscula(opcao)}>{opcao}</option>
+        {opcoes?.map(opcao =>{
+            return (
+            <option value={minuscula(opcao.nome)} key={opcao.id}>{opcao.nome}</option>
+            )
         }
         )}
         </Field>
