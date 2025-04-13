@@ -171,7 +171,7 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
 
     return (
         //Card do colaborador
-        <div className="flex flex-col p-4 5xl:p-2 justify-evenly w-[90%] bg-cinza-claro shadow-md shadow-gray-900 rounded-xl md:w-[70%] lg:px-16">
+        <div className="flex flex-col p-4 5xl:p-2 justify-evenly w-[100%] bg-cinza-claro shadow-md shadow-gray-900 rounded-xl md:w-[70%] lg:px-16">
 
             {/**Voltar*/}
             <button className=" w-8 h-8 flex justify-center items-center hover:cursor-pointer" onClick={() => voltar()}><SvgSetaVoltar /></button>

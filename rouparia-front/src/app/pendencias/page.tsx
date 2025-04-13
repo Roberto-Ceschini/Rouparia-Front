@@ -19,7 +19,7 @@ export default function Pendencias() {
     const [totalPages, setTotalPages] = useState(1);
     const [nextPage, setNextPage] = useState<number | null>(null);
     const [prevPage, setPrevPage] = useState<number | null>(null);
-    const limite = 3;
+    const limite = 15;
 
     //colaborador
     const [colaboradores, setColaboradores] = useState<ColaboradorSimples[] | []>([]);

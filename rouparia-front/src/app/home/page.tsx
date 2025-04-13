@@ -1,4 +1,5 @@
 "use client"
+import ButtonCadastrarExcluir from "@/components/ButtonCadastrarExcluir";
 import CardColaborador from "@/components/CardColaborador";
 import FormInput from "@/components/FormInput";
 import HeaderHistoricoColaborador from "@/components/HeaderHistoricoColaborador";
@@ -153,7 +154,7 @@ export default function Home() {
                 </Form>
               </Formik>
             </div></>
-        ) : (<div className="items-center justify-center flex md:hidden">
+        ) : (<div className="items-center justify-center flex md:hidden w-[90%]">
           <CardColaborador
             colaborador={colaborador}
             setColaborador={setColaborador}
@@ -165,12 +166,14 @@ export default function Home() {
 
       {/**Background Branco*/}
       <div className="hidden md:flex w-[50vw] h-[90vh] justify-center items-center">
-        {colaborador && <CardColaborador
-          colaborador={colaborador}
-          setColaborador={setColaborador}
-          setMostrarPopUpNaoAutorizado={handlePopUpNaoAutorizado}
-          setMostrarPopUpSucesso={setMostrarPopUpSucesso}
-          setBotaoClicado={setBotaoClicado} />}
+        {colaborador && <div className="items-center justify-center flex w-[80%]">
+          <CardColaborador
+            colaborador={colaborador}
+            setColaborador={setColaborador}
+            setMostrarPopUpNaoAutorizado={handlePopUpNaoAutorizado}
+            setMostrarPopUpSucesso={setMostrarPopUpSucesso}
+            setBotaoClicado={setBotaoClicado} />
+        </div>}
       </div>
     </div>
     </>
