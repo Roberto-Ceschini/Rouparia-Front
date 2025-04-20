@@ -21,13 +21,13 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col md:flex-row">
+    <div className="flex flex-col lg:flex-row">
       {/**Background Verde*/}
-      <div className="flex w-[100vw] h-[100vh] bg-verde-primario justify-center items-center md:w-[50vw]">
+      <div className="flex w-[100vw] h-[100vh] bg-verde-primario justify-center items-center lg:w-[50vw]">
         {/**Caixa Formulario*/}
-        <div className="flex flex-col p-2 justify-evenly w-[80%] h-[50%] bg-verde-terciario rounded-xl md:w-[60%] lg:px-16">
+        <div className="flex flex-col p-2 justify-evenly w-[80%] h-[50%] bg-verde-terciario rounded-xl lg:w-[60%] lg:px-16">
           {/**Texto Login*/}
-          <h1 className="font-bold text-center font-poppins-semi-bold text-xl md:text-2xl">Login</h1>
+          <h1 className="font-bold text-center font-poppins-semi-bold text-xl lg:text-2xl">Login</h1>
           {/**Formulario*/}
           <Formik
             initialValues={{
@@ -73,7 +73,7 @@ export default function Home() {
         </div>
       </div>
       {/**Background Branco*/}
-      <div className="hidden md:flex w-[50vw] h-[100vh] bg-white justify-center items-center">
+      <div className="hidden lg:flex w-[50vw] h-[100vh] bg-white justify-center items-center">
           <p>Olá</p>
       </div>
     </div>

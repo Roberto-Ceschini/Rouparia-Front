@@ -81,7 +81,7 @@ export default function HeaderHistoricoColaborador({ tipo }: props) {
     <>
       {/* Cabeçalho principal */}
       <div
-        className={`flex sticky top-0 flex-row justify-between py-6 px-3 md:px-8 items-center w-full h-[10vh] bg-verde-primario`}
+        className={`flex sticky top-0 flex-row justify-between py-6 px-3 lg:px-8 items-center w-full h-[10vh] bg-verde-primario`}
       >
         {/* Parte esquerda (voltar + título) */}
         <div className="flex flex-row justify-around">
@@ -93,7 +93,7 @@ export default function HeaderHistoricoColaborador({ tipo }: props) {
           className="cursor-pointer group"
           onClick={() => router.replace("/home")}
         >
-          <h1 className="group-hover:text-laranja-hover lg:flex font-bold text-cinza-claro text-2xl text-center md:text-start">
+          <h1 className="group-hover:text-laranja-hover lg:flex font-bold text-cinza-claro text-2xl text-center lg:text-start">
             {mostrarTitulo()}
           </h1>
         </button>

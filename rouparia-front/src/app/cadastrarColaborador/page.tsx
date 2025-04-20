@@ -82,9 +82,9 @@ export default function CadastrarColaborador() {
       {/**Conteudo principal*/}
       <div className="flex w-[100%] h-[100%] justify-center items-center">
         {/**Caixa Formulario*/}
-        <div className="flex flex-col p-2 gap-4 justify-evenly w-[80%] bg-verde-terciario rounded-xl lg:py-8 md:w-[30%] lg:px-16">
+        <div className="flex flex-col p-2 gap-4 justify-evenly w-[80%] bg-verde-terciario rounded-xl lg:py-8 lg:w-[30%] lg:px-16">
           {/**Texto Login*/}
-          <h1 className="font-bold text-center font-poppins-semi-bold text-xl md:text-2xl">
+          <h1 className="font-bold text-center font-poppins-semi-bold text-xl lg:text-2xl">
             Cadastro
           </h1>
           {/**Formulario*/}

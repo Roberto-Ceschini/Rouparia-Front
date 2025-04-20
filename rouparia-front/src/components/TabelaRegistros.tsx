@@ -26,7 +26,7 @@ export default function TabelaRegistros({ colaborador }: TabelaRegistrosProps) {
 
     return (
         <>
-            <table className="hidden md:table w-[80vw]">
+            <table className="hidden lg:table w-[80vw]">
                 <thead className="sticky top-[10vh]">
                     <tr className="bg-[#F2F2F2] shadow-md rounded-l-xl rounded-r-xl">
                         <th className="px-4 py-2 font-poppins-semiBold rounded-l-xl">Número</th>
@@ -54,7 +54,7 @@ export default function TabelaRegistros({ colaborador }: TabelaRegistrosProps) {
             </table>
 
             {/* Versão Mobile (cards empilhados) */}
-            <div className="md:hidden space-y-4 w-[90vw] mx-auto">
+            <div className="lg:hidden space-y-4 w-[90vw] mx-auto">
                 {registros.map((registro) => (
                     <div
                         key={registro.id}

@@ -113,20 +113,20 @@ export default function Home() {
 
     <>
     <HeaderHistoricoColaborador tipo="home"/>
-    <div className="flex flex-col md:flex-row">
+    <div className="flex flex-col lg:flex-row">
       {/**PopUps*/}
       {mostrarPopUpNaoEncontrado && <PopUpUsuarioNaoEncontrado numero={nColaborador} handleTogglePopUp={() => setMostrarPopUpNaoEncontrado(false)} />}
       {mostrarPopUpNaoAutorizado && <PopUpNaoAutorizado colaborador={colaborador} handleTogglePopUp={()=>setMostrarPopUpNaoAutorizado(false)} errorCode={errorCode}/>}
       {mostrarPopUpSucesso && <PopUpSucesso colaborador={colaborador} botaoClicado={botaoClicao} handleTogglePopUp={handleTogglePopUpSucesso} />}
 
       {/**Background Verde*/}
-      <div className="flex flex-col w-[100vw] h-[90vh] bg-verde-primario justify-center items-center md:w-[50vw]">
+      <div className="flex flex-col w-[100vw] h-[90vh] bg-verde-primario justify-center items-center lg:w-[50vw]">
         {(!colaborador) ? (
           <>
             {/**Caixa Formulario*/}
-            <div className="flex flex-col p-2 justify-evenly w-[80%] h-[50%] bg-verde-terciario rounded-xl md:w-[60%] lg:px-16 lg:py-20">
+            <div className="flex flex-col p-2 justify-evenly w-[80%] h-[50%] bg-verde-terciario rounded-xl lg:w-[60%] lg:px-16 lg:py-20">
               {/**Texto Login*/}
-              <h1 className="font-bold text-center font-poppins-semi-bold text-xl md:text-2xl">Digite o número do colaborador</h1>
+              <h1 className="font-bold text-center font-poppins-semi-bold text-xl lg:text-2xl">Digite o número do colaborador</h1>
               {/**Formulario*/}
               <Formik
                 initialValues={{
@@ -157,7 +157,7 @@ export default function Home() {
                 </Form>
               </Formik>
             </div></>
-        ) : (<div className="items-center justify-center flex md:hidden w-[90%]">
+        ) : (<div className="items-center justify-center flex lg:hidden w-[90%]">
           <CardColaborador
             colaborador={colaborador}
             setColaborador={setColaborador}
@@ -168,7 +168,7 @@ export default function Home() {
       </div>
 
       {/**Background Branco*/}
-      <div className="hidden md:flex md:flex-col w-[50vw] h-[90vh] justify-center items-center">
+      <div className="hidden lg:flex lg:flex-col w-[50vw] h-[90vh] justify-center items-center">
       <Image src="/assets/images/logo.png" alt="Logo" width={200} height={100} className="-mb-10"/>
         {colaborador && <div className="items-center justify-center flex w-[80%]">
           <CardColaborador
