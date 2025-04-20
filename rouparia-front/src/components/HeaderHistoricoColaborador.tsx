@@ -57,7 +57,7 @@ export default function HeaderHistoricoColaborador({ tipo }: props) {
   };
 
   const cadastrar = () => {
-    router.push("/cadastrarColaborador");
+    router.push("/cadastros");
   };
 
   const excluir = () => {

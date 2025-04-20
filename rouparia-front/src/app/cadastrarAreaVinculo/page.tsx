@@ -1,19 +1,19 @@
 "use client";
-import FormInput from "@/components/FormInput";
 import HeaderHistoricoColaborador from "@/components/HeaderHistoricoColaborador";
-import SubmitButton from "@/components/SubmitButton";
 import api from "@/services/axios";
-import { Formik, Form } from "formik";
-import * as Yup from "yup";
 import { use, useEffect, useState } from "react";
 import TabelaAreas from "@/components/TabelaArea";
 import { Area } from "@/types/area";
 import PopUpCadastrarArea from "@/components/popUpCadastrarArea";
+import { useSearchParams } from "next/navigation";
 
-export default function CadastrarArea() {
+export default function CadastrarAreaVinculo() {
   const [isErrorVisible, setIsErrorVisible] = useState(true);
   const [areas, setAreas] = useState<[] | Area[]>([]); // Áreas que serão exibidas no dropDown
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const useParams= useSearchParams();
+  const tipo = useParams.get('tipo');
 
   // Função para mostrar o erro por 4 segundos
 
@@ -26,13 +26,29 @@ export default function CadastrarArea() {
     }
   }
 
+  const fetchVinculos = async () => {
+    try { 
+      const response = await api.get("/vinculo");
+      if (response.data) return response.data;
+    }
+    catch (error) {
+      alert(`Erro ao carregar vínculos, recarregue a página\n${error}`);
+    }
+  }
+
   useEffect(() => {
-    const carregarAreas = async () => {
-      const areasData = await fetchAreas();
+    const carregarDados = async () => {
+      if (tipo === 'area') {
+        const areasData = await fetchAreas();
+        if (areasData) setAreas(areasData);
+      }
+      else if (tipo === 'vinculo') {
+      const areasData = await fetchVinculos();
       if (areasData) setAreas(areasData);
     };
+  }
 
-    carregarAreas()
+    carregarDados()
   }, []);
 
   return (
@@ -42,8 +58,8 @@ export default function CadastrarArea() {
 
       {/* Conteúdo principal */}
       <div className="flex w-full justify-center overflow-y-auto">
-        {isModalOpen && (<PopUpCadastrarArea setIsModalOpen={setIsModalOpen} />)}
-          <TabelaAreas areas={areas} setIsModalOpen={setIsModalOpen}/>
+        {isModalOpen && (<PopUpCadastrarArea setIsModalOpen={setIsModalOpen} tipo={tipo}/>)}
+          <TabelaAreas areas={areas} setIsModalOpen={setIsModalOpen} tipo={tipo}/>
         </div>
       </div>
   );

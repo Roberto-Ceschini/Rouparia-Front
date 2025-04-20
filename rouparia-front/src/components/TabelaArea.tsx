@@ -3,17 +3,19 @@
 import api from "@/services/axios";
 import { Pencil, PlusIcon, Trash } from "lucide-react";
 import { Area } from "@/types/area";
+import { Vinculo } from "@/types/vinculo";
 
 interface TabelaAreasProps {
   areas: Area[];
   setIsModalOpen: (isOpen: boolean) => void;
+  tipo: string | null;
 }
 
 const onEditar = async (area: Area) => {
   return;
 };
 
-const onExcluir = async (id: number) => {
+const onExcluirArea = async (id: number) => {
   if (confirm("Tem certeza que deseja excluir esta área?")) {
     try {
       await api.delete(`/area/${id}`);
@@ -29,22 +31,38 @@ const onExcluir = async (id: number) => {
   }
 };
 
-export default function TabelaAreas({ areas, setIsModalOpen }: TabelaAreasProps) {
+const onExcluirVinculo = async (id: number) => {
+  if (confirm("Tem certeza que deseja excluir este vínculo?")) {
+    try {
+      await api.delete(`/vinculo/${id}`);
+      alert("Vínculo excluída com sucesso!");
+      window.location.reload();
+    } catch (error: any) {
+      alert(
+        `Erro ao excluir a vínculo: ${
+          error.response?.data?.message || error.message
+        }`
+      );
+    }
+  }
+};
+
+export default function TabelaAreas({ areas, setIsModalOpen, tipo }: TabelaAreasProps) {
   if (!areas || areas.length === 0) {
-    return <p className="text-center text-gray-500">Nenhuma área cadastrada</p>;
+    return <p className="text-center text-gray-500">{tipo === 'area' ? 'Nenhuma área cadastrada' : 'Nenhum vínculo cadastrado'}</p>;
   }
 
   return (
     <table className="w-[80vw] mx-auto mt-6 border border-gray-200 rounded-xl overflow-hidden">
       <thead>
         <tr className="bg-[#F2F2F2] text-left">
-          <th className="px-4 py-3 font-poppins-semiBold">Nome da Área</th>
+          <th className="px-4 py-3 font-poppins-semiBold">{tipo === 'area' ? 'Nome da Área' : 'Nome do Vínculo'}</th>
           <th className="px-4 py-3 font-poppins-semiBold">
             Ações
             <button
             onClick={() => setIsModalOpen(true)}
               className="text-verde-primario hover:text-verde-primario-hover cursor-pointer"
-              title="Excluir"
+              title="Adicionar"
             >
               <PlusIcon size={20} />
             </button>
@@ -67,7 +85,7 @@ export default function TabelaAreas({ areas, setIsModalOpen }: TabelaAreasProps)
                 <Pencil size={20} />
               </button>
               <button
-                onClick={() => onExcluir(area.id)}
+                onClick={() => {tipo === 'area'? onExcluirArea(area.id) : onExcluirVinculo(area.id)} }
                 className="text-red-600 hover:text-red-800 cursor-pointer"
                 title="Excluir"
               >

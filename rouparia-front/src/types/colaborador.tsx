@@ -11,5 +11,5 @@ export type Colaborador = {
   area?: Area | null;
   vinculo_id?: number | null;
   vinculo?: Vinculo | null;
-  registros: Registro | null;
+  registros?: Registro | null;
 };

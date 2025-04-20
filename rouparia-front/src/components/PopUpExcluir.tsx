@@ -4,14 +4,14 @@ import { useEffect } from "react";
 import api from "@/services/axios";
 import SvgInterrogacao from "./SvgInterrogacao";
 
-interface PopUpSucessoProps {
+interface PopUpExcluirProps {
     handleTogglePopUp: () => void;
     colaborador: Colaborador | null;
 }
 
 const mensagens = ["Uniforme Entregue", "Uniforme Retirado", "Uniforme Entregue e Retirado"];
 
-export default function PopUpExcluir({ handleTogglePopUp, colaborador }: PopUpSucessoProps) {
+export default function PopUpExcluir({ handleTogglePopUp, colaborador }: PopUpExcluirProps) {
 
     const excluirColaborador = async (numero: string) => {
         try {
@@ -19,6 +19,7 @@ export default function PopUpExcluir({ handleTogglePopUp, colaborador }: PopUpSu
             if (response) alert(`Sucesso ao excluir o colaborador\n
                 ${response.data}`)
             handleTogglePopUp()
+            window.location.reload()
         } catch (error: any) {
             alert(`Erro ${error.response.data.statusCode} ao excluir colaborador\n\n${error.response.data.message}`);
         }
