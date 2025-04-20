@@ -18,7 +18,7 @@ export default function FormInput({ name, placeholder, label, isErrorVisible = t
 
     return (
         <div className='flex flex-col gap-1'>
-            <label htmlFor="email" className="text-verde-primario font-poppins-regular text-base">
+            <label htmlFor="username" className="text-verde-primario font-poppins-regular text-base">
                 {label}
                 {obrigatorio && <span className="text-red-500"> *</span>}
             </label>
@@ -27,11 +27,11 @@ export default function FormInput({ name, placeholder, label, isErrorVisible = t
                     name={name}
                     type={name}
                     placeholder={placeholder}
-                    className={`bg-[#F6F6F6] rounded-md ${name === 'password' ? 'pl-9' : name === 'email' ? 'pl-9' : 'pl-3'} py-1.5 w-[100%] text-sm`}
+                    className={`bg-[#F6F6F6] rounded-md ${name === 'password' ? 'pl-9' : name === 'username' ? 'pl-9' : 'pl-3'} py-1.5 w-[100%] text-sm`}
                 >
                     
                 </Field>
-                {name === 'email' ? inputIcons[0]() : name === 'password' ? inputIcons[1]() : '' }
+                {name === 'username' ? inputIcons[0]() : name === 'password' ? inputIcons[1]() : '' }
             </div>
             {isErrorVisible && (
                 <p className='text-vermelho text-sm'><ErrorMessage name={name} /></p>

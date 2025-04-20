@@ -51,7 +51,7 @@ export default function ExcluirColaborador() {
       <HeaderHistoricoColaborador tipo="excluir" />
 
       {/**Conteudo principal*/}
-      <div className="flex border-2 w-[100%] h-[100%] justify-center items-center">
+      <div className="flex w-[100%] h-[100%] justify-center items-center">
         {/**Caixa Formulario*/}
         <div className="flex flex-col p-2 gap-4 justify-evenly w-[80%] bg-verde-terciario rounded-xl lg:py-8 md:w-[30%] lg:px-16">
           {/**Texto Login*/}

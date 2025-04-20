@@ -25,9 +25,9 @@ export default function Pendencias() {
     const [colaboradores, setColaboradores] = useState<ColaboradorSimples[] | []>([]);
 
     //TESTES 
-    useEffect(() => {
-        console.log("COABORADORES\n", colaboradores)
-    }, [colaboradores])
+    // useEffect(() => {
+    //     console.log("COABORADORES\n", colaboradores)
+    // }, [colaboradores])
 
     //----------------FUNCOES-------------------
 
@@ -40,7 +40,6 @@ export default function Pendencias() {
     const fetchPendecias = async () => {
         try {
             const response = await api.get(`/colaborador/pendentes?page=${paginaAtual}&limit=${limite}`);
-            console.log(response)
             if (response) {
                 const colaboradoresFormatados = formatarColaboradores(response.data.colaboradores);
                 setColaboradores(colaboradoresFormatados);

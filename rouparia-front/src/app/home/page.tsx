@@ -8,6 +8,7 @@ import PopUpSucesso from "@/components/PopUpSucesso";
 import PopUpUsuarioNaoEncontrado from "@/components/PopUpUsuarioNaoEncontrado";
 import SairButton from "@/components/SairButton";
 import SubmitButton from "@/components/SubmitButton";
+import { useAuth } from "@/contexts/authContext";
 import { useColaboradorContext } from "@/contexts/colaboradorContext";
 import api from "@/services/axios";
 import { Colaborador } from "@/types/colaborador";
@@ -20,6 +21,7 @@ export default function Home() {
 
   //Pega o numero do colaborador via context (Pagina de historicos)
   const {setColaboradorContext, colaborador_context} = useColaboradorContext();
+  const {token} = useAuth()
 
   const [colaborador, setColaborador] = useState<Colaborador | null>(null);//Estado que controla o colaborador
 

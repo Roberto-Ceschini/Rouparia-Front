@@ -5,9 +5,11 @@ import * as Yup from 'yup';
 import FormInput from '@/components/FormInput';
 import SubmitButton from '@/components/SubmitButton';
 import { useRouter } from 'next/navigation'
+import { useAuth } from '@/contexts/authContext';
 
 export default function Home() {
   const router = useRouter()
+  const {login} = useAuth()//Importa o hook de autenticação
 
   const [isErrorVisible, setIsErrorVisible] = useState(true);//Estado que controla a visibilidade do erro
 
@@ -29,28 +31,32 @@ export default function Home() {
           {/**Formulario*/}
           <Formik
             initialValues={{
-              email: '',
+              username: '',
               password: '',
             }}
             validationSchema={Yup.object({
-              email: Yup.string().email('Endereço de email inválido!').required('Email é obrigatório!'),
+              username: Yup.string().required('Nome de usuário é obrigatório!'),
               password: Yup.string().required('Senha é obrigatória'),
             })}
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
+                login(values.username, values.password).then(() => {
+                } ).catch((error) => {
+                  setIsErrorVisible(true);
+                  handleShowError();
+                }
+                // Aqui você pode redirecionar o usuário para outra página após o login
+                );
                 setSubmitting(false);
               }, 400);
-  
-              router.replace('/home');
             }}
           >
             <Form className='flex flex-col gap-4'>
-              {/**Email*/}
+              {/**Username*/}
               <FormInput
-                name='email'
-                placeholder='rouparia@gmail.com'
-                label='Email' 
+                name='username'
+                placeholder='Username'
+                label='Nome de usuário' 
                 isErrorVisible={isErrorVisible}
                 />
               {/**Senha*/}

@@ -53,7 +53,6 @@ export default function CadastrarColaborador() {
           NOME: ${colaborador.nome}
           NÚMERO: ${colaborador.numero}`);
     }catch(error:any){
-        console.log("ERRO-", error)
         alert (`Erro ${error.response.data.statusCode} ao cadastrar colaborador\n\n${error.response.data.message}`);
     }
   }
@@ -69,10 +68,10 @@ export default function CadastrarColaborador() {
   }, [])
 
   //----------TESTES----------
-  useEffect(()=>{
-    console.log("VINCULOS", vinculos)
-    console.log("Areas", areas)
-  },[vinculos, areas])
+  // useEffect(() => {
+  //   console.log("VINCULOS", vinculos);
+  //   console.log("Areas", areas);
+  // }, [vinculos, areas]);
 
   return (
     //Body
@@ -81,7 +80,7 @@ export default function CadastrarColaborador() {
       <HeaderHistoricoColaborador tipo="cadastro" />
 
       {/**Conteudo principal*/}
-      <div className="flex border-2 w-[100%] h-[100%] justify-center items-center">
+      <div className="flex w-[100%] h-[100%] justify-center items-center">
         {/**Caixa Formulario*/}
         <div className="flex flex-col p-2 gap-4 justify-evenly w-[80%] bg-verde-terciario rounded-xl lg:py-8 md:w-[30%] lg:px-16">
           {/**Texto Login*/}
@@ -111,7 +110,7 @@ export default function CadastrarColaborador() {
               setTimeout(() => {
                 //Verifica se a area esta como undefined, se sim, retorna, automaticamente, a primeira area
                 const verificarAreaUndefined = ()=>{
-                  console.log("AREA SELECIONADA-", values.area_id)
+               
                   if (values.area_id === undefined){
                       if (areas) return Number(areas[0].id);
                   }
@@ -119,7 +118,6 @@ export default function CadastrarColaborador() {
                 }
                 //Verifica se o vinculo esta como undefined, se sim, retorna, automaticamente, o primeiro vinculo
                 const verificarVinculoUndefined = ()=>{
-                  console.log("VINCULO SELECIONADA-", values.vinculo_id)
                   if (values.vinculo_id === undefined){
                     if (vinculos) return Number(vinculos[0].id);
                   }

@@ -1,4 +1,5 @@
 // app/layout.tsx ou app/rootLayout.tsx (se estiver com nome customizado)
+import { AuthProvider } from "@/contexts/authContext";
 import "./globals.css";
 import { ColaboradorProvider } from "@/contexts/colaboradorContext"; // Ajusta o caminho conforme sua pasta
 
@@ -10,9 +11,9 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body>
-        <ColaboradorProvider>
-          {children}
-        </ColaboradorProvider>
+        <AuthProvider>
+          <ColaboradorProvider>{children}</ColaboradorProvider>
+        </AuthProvider>
       </body>
     </html>
   );
