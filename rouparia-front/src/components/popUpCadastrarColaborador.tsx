@@ -16,9 +16,10 @@ interface Props {
   handleTogglePopUp: (isOpen: boolean) => void;
   tipo: 'cadastrar' | 'editar' | null;
   colaborador?: Colaborador | null; // Adicionei o colaborador_id como opcional
+  lastNumber: number; // Adicionei o lastNumber como opcional
 }
 
-export default function PopUpCadastrarColaborador({ handleTogglePopUp, tipo, colaborador }: Props) {
+export default function PopUpCadastrarColaborador({ handleTogglePopUp, tipo, colaborador, lastNumber }: Props) {
   //------------VARIAVEIS----------
   const [isErrorVisible, setIsErrorVisible] = useState(true); //Estado que controla a visibilidade do erro
   const [areas, setAreas] = useState<null | Area[]>(null); //Areas que serao exibidas no dropDown
@@ -109,7 +110,7 @@ export default function PopUpCadastrarColaborador({ handleTogglePopUp, tipo, col
         {/**Formulario*/}
         <Formik
           initialValues={{
-            numero: colaborador?.numero || 0,
+            numero: colaborador?.numero || lastNumber,
             nome: colaborador?.nome || "",
             qtd_pendente: colaborador?.qtd_pendente || 0,
             area_id: colaborador?.area_id || undefined,

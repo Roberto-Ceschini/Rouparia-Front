@@ -29,7 +29,7 @@ export default function cadastroColaborador(){
     return(
         <div className="flex flex-col w-[100vw] h-[100vh] items-center">
             {/* Header */}
-            <HeaderHistoricoColaborador tipo="cadastro" />
+            <HeaderHistoricoColaborador tipo="gerenciamento colaborador" />
 
             {/* Conteúdo principal */}
             <div className="flex w-full justify-center overflow-y-auto">

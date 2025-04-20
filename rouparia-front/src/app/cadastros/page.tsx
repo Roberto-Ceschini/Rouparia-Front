@@ -7,17 +7,17 @@ import HeaderHistoricoColaborador from '@/components/HeaderHistoricoColaborador'
 export default function TelaDeCadastro() {
   const botoes = [
     {
-      label: 'Cadastrar Colaborador',
+      label: 'Colaboradores',
       href: '/cadastroColaborador',
       Icon: UserPlus,
     },
     {
-      label: 'Cadastrar Área',
+      label: 'Áreas',
       href: '/cadastrarAreaVinculo?tipo=area',
       Icon: MapPin,
     },
     {
-      label: 'Cadastrar Vínculo',
+      label: 'Vínculos',
       href: '/cadastrarAreaVinculo?tipo=vinculo',
       Icon: Link2,
     },
@@ -25,7 +25,7 @@ export default function TelaDeCadastro() {
 
   return (
     <main className="min-h-screen bg-gray-100">
-      <HeaderHistoricoColaborador tipo="excluir" />
+      <HeaderHistoricoColaborador tipo="gerenciamento" />
 
       {/* Container dos botões */}
       <div className="flex justify-center p-6">

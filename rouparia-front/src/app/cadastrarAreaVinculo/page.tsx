@@ -8,9 +8,8 @@ import PopUpCadastrarArea from "@/components/popUpCadastrarArea";
 import { useSearchParams } from "next/navigation";
 
 export default function CadastrarAreaVinculo() {
-  const [isErrorVisible, setIsErrorVisible] = useState(true);
+  //------------VARIAVEIS----------
   const [areas, setAreas] = useState<[] | Area[]>([]); // Áreas que serão exibidas no dropDown
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const useParams= useSearchParams();
   const tipo = useParams.get('tipo');
@@ -54,12 +53,11 @@ export default function CadastrarAreaVinculo() {
   return (
     <div className="flex flex-col w-[100vw] h-[100vh] items-center">
       {/* Header */}
-      <HeaderHistoricoColaborador tipo="cadastro" />
+      <HeaderHistoricoColaborador tipo={tipo === 'area' ? 'gerenciamento areas' : 'gerenciamento vinculos'} />
 
       {/* Conteúdo principal */}
       <div className="flex w-full justify-center overflow-y-auto">
-        {isModalOpen && (<PopUpCadastrarArea setIsModalOpen={setIsModalOpen} tipo={tipo}/>)}
-          <TabelaAreas areas={areas} setIsModalOpen={setIsModalOpen} tipo={tipo}/>
+          <TabelaAreas areas={areas} tipo={tipo}/>
         </div>
       </div>
   );

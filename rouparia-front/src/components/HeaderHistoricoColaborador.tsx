@@ -11,7 +11,15 @@ import { useState } from "react";
 import { useAuth } from "@/contexts/authContext";
 
 interface props {
-  tipo: "pendencias" | "historico" | "cadastro" | "excluir" | "home";
+  tipo:
+    | "pendencias"
+    | "historico"
+    | "cadastro"
+    | "gerenciamento"
+    | "home"
+    | "gerenciamento colaborador"
+    | "gerenciamento areas"
+    | "gerenciamento vinculos"
 }
 
 export default function HeaderHistoricoColaborador({ tipo }: props) {
@@ -23,8 +31,11 @@ export default function HeaderHistoricoColaborador({ tipo }: props) {
     "Registro de pendências",
     "Registro do colaborador",
     "Cadastro do colaborador",
-    "Excluir colaborador",
+    "Painel de gerenciamento",
     "Home",
+    "Gerenciamento de colaboradores",
+    "Gerenciamento de áreas",
+    "Gerenciamento de vínculos",
   ];
 
   const mostrarTitulo = () => {
@@ -41,14 +52,26 @@ export default function HeaderHistoricoColaborador({ tipo }: props) {
         return titulo[2];
       }
 
-      case "excluir": {
+      case "gerenciamento": {
         return titulo[3];
       }
 
       case "home": {
         return titulo[4];
       }
+
+      case "gerenciamento colaborador": {
+        return titulo[5];
+      }
+      
+      case "gerenciamento areas": {
+        return titulo[6];
+      }
+
+      case "gerenciamento vinculos": {
+        return titulo[7]; 
     }
+  }
   };
 
   const voltar = () => {
@@ -60,16 +83,13 @@ export default function HeaderHistoricoColaborador({ tipo }: props) {
     router.push("/cadastros");
   };
 
-  const excluir = () => {
-    router.push("/excluirColaborador");
-  };
   const [menuAberto, setMenuAberto] = useState(false);
 
   const toggleMenu = () => {
     setMenuAberto(!menuAberto);
   };
 
-  if (role === null){
+  if (role === null) {
     return (
       <div className="flex w-full h-[10vh] bg-verde-primario justify-center items-center">
         <h1 className="text-cinza-claro text-2xl font-bold">Carregando...</h1>
@@ -146,8 +166,7 @@ export default function HeaderHistoricoColaborador({ tipo }: props) {
                 >
                   Pendências
                 </Link>
-                <ButtonCadastrarExcluir onClick={cadastrar} texto="Cadastrar" />
-                <ButtonCadastrarExcluir onClick={excluir} texto="Excluir" />
+                <ButtonCadastrarExcluir onClick={cadastrar} />
               </>
             )}
           </>
@@ -167,14 +186,6 @@ export default function HeaderHistoricoColaborador({ tipo }: props) {
                       cadastrar();
                       setMenuAberto(false);
                     }}
-                    texto="Cadastrar"
-                  />
-                  <ButtonCadastrarExcluir
-                    onClick={() => {
-                      excluir();
-                      setMenuAberto(false);
-                    }}
-                    texto="Excluir"
                   />
                   <Link
                     href={"/pendencias"}

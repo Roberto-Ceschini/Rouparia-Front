@@ -15,9 +15,7 @@ export default function PopUpExcluir({ handleTogglePopUp, colaborador }: PopUpEx
 
     const excluirColaborador = async (numero: string) => {
         try {
-            const response = await api.delete(`/colaborador/numero/${numero}`);
-            if (response) alert(`Sucesso ao excluir o colaborador\n
-                ${response.data}`)
+            await api.delete(`/colaborador/numero/${numero}`);
             handleTogglePopUp()
             window.location.reload()
         } catch (error: any) {
