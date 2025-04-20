@@ -91,7 +91,7 @@ export default function HeaderHistoricoColaborador({ tipo }: props) {
         </div>
         <button
           className="cursor-pointer group"
-          onClick={() => router.replace("/home")}
+          onClick={() => router.replace("/")}
         >
           <h1 className="group-hover:text-laranja-hover lg:flex font-bold text-cinza-claro text-2xl text-center lg:text-start">
             {mostrarTitulo()}

@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }: any) => {
     const savedToken = localStorage.getItem("token");
     if (savedToken) setToken(savedToken);
     else {
-      pathname !== "/" && router.push("/"); // Redireciona para a página de login se não houver token
+      pathname !== "/login" && router.replace("/login"); // Redireciona para a página de login se não houver token
     }
     try {
       if (savedToken) {
@@ -72,7 +72,7 @@ export const AuthProvider = ({ children }: any) => {
       const token = response.data.acess_token;
       localStorage.setItem("token", token);
       setToken(token);
-      router.push("/home"); // Redireciona para a página inicial após o login
+      router.replace("/"); // Redireciona para a página inicial após o login
     } catch (error) {
       console.error("Erro ao fazer login:", error); // Log do err
       alert("Falha ao fazer login. Verifique suas credenciais.");
