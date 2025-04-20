@@ -17,7 +17,7 @@ export default function TabelaColaboradores({
   const [isModalAdicionarOpen, setIsModalAdicionarOpen] = useState(false);
   const [colaborador, setColaborador] = useState<Colaborador | null>(null);
   const [tipo, setTipo] = useState<"editar" | "cadastrar" | null>(null);
-  const lastNumber = (colaboradores.findLast(()=>true)?.numero || 0) + 1; // Pega o último número cadastrado
+  const lastNumber = (colaboradores.findLast(() => true)?.numero || 0) + 1; // Pega o último número cadastrado
 
   const onEditar = async (colaborador: Colaborador) => {
     setIsModalAdicionarOpen(true);
@@ -51,7 +51,7 @@ export default function TabelaColaboradores({
           colaborador={colaborador}
         />
       )}
-
+  
       {isModalAdicionarOpen && (
         <PopUpCadastrarColaborador
           tipo={tipo}
@@ -60,10 +60,11 @@ export default function TabelaColaboradores({
           lastNumber={lastNumber}
         />
       )}
-
-      <table className="w-[80vw] mx-auto mt-6 border border-gray-200 rounded-xl overflow-hidden">
-        <thead>
-          <tr className="bg-[#F2F2F2] text-left">
+  
+      {/* Versão Desktop */}
+      <table className="hidden lg:table w-[90vw]">
+        <thead className="sticky top-[10vh] text-left">
+          <tr className="bg-[#F2F2F2] shadow-md rounded-l-xl rounded-r-xl">
             <th className="px-4 py-3 font-poppins-semiBold">Número</th>
             <th className="px-4 py-3 font-poppins-semiBold">Nome</th>
             <th className="px-4 py-3 font-poppins-semiBold">Área</th>
@@ -114,6 +115,54 @@ export default function TabelaColaboradores({
           ))}
         </tbody>
       </table>
+  
+      {/* Versão Mobile */}
+      <div className="lg:hidden space-y-4 w-[90vw] mx-auto overflow-y-auto">
+        <div className="flex justify-between items-center">
+          <h2 className="font-poppins-semiBold text-lg">Colaboradores</h2>
+          <button
+            onClick={() => onAdicionar()}
+            className="text-verde-primario hover:text-verde-primario-hover"
+            title="Adicionar"
+          >
+            <PlusIcon size={24} />
+          </button>
+        </div>
+  
+        {colaboradores.map((colaborador) => (
+          <div
+            key={colaborador.numero}
+            className="bg-white p-4 rounded-xl shadow-md shadow-verde-terciario-hover/50"
+          >
+            <p className="font-poppins-semiBold text-base text-[#188038] mb-2">
+              {String(colaborador.numero).padStart(3, "0")} - {colaborador.nome}
+            </p>
+  
+            <div className="text-sm space-y-1 mb-2">
+              <div><strong>Área:</strong> {colaborador.area?.nome || "N/A"}</div>
+              <div><strong>Vínculo:</strong> {colaborador.vinculo?.nome || "N/A"}</div>
+              <div><strong>Pendências:</strong> {colaborador.qtd_pendente}</div>
+            </div>
+  
+            <div className="flex gap-3">
+              <button
+                onClick={() => onEditar(colaborador)}
+                className="text-blue-600 hover:text-blue-800"
+                title="Editar"
+              >
+                <Pencil size={20} />
+              </button>
+              <button
+                onClick={() => onExcluir(colaborador)}
+                className="text-red-600 hover:text-red-800"
+                title="Excluir"
+              >
+                <Trash size={20} />
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
     </>
   );
-}
+}  

@@ -27,12 +27,12 @@ export default function cadastroColaborador(){
     }, []);
 
     return(
-        <div className="flex flex-col w-[100vw] h-[100vh] items-center">
+        <div className="flex flex-col w-[100vw] h-[100vh] items-center overflow-y-auto">
             {/* Header */}
             <HeaderHistoricoColaborador tipo="gerenciamento colaborador" />
 
             {/* Conteúdo principal */}
-            <div className="flex w-full justify-center overflow-y-auto">
+            <div className="mt-10 flex justify-center">
                 <TabelaColaboradores colaboradores={colaboradores}/>
             </div>
         </div>
