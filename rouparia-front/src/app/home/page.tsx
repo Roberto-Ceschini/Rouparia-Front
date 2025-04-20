@@ -15,6 +15,7 @@ import { Colaborador } from "@/types/colaborador";
 import { Form, Formik } from "formik";
 import Link from "next/link";
 import { use, useEffect, useState } from "react";
+import Image from "next/image";
 import * as Yup from 'yup';
 
 export default function Home() {
@@ -167,7 +168,8 @@ export default function Home() {
       </div>
 
       {/**Background Branco*/}
-      <div className="hidden md:flex w-[50vw] h-[90vh] justify-center items-center">
+      <div className="hidden md:flex md:flex-col w-[50vw] h-[90vh] justify-center items-center">
+      <Image src="/assets/images/logo.png" alt="Logo" width={200} height={100} className="-mb-10"/>
         {colaborador && <div className="items-center justify-center flex w-[80%]">
           <CardColaborador
             colaborador={colaborador}
