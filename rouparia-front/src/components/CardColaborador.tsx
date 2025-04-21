@@ -1,7 +1,7 @@
 import { Colaborador } from "@/types/colaborador";
 import ServiceButton from "./ServiceButton";
 import SvgSetaVoltar from "./SvgSetaVoltar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import api from "@/services/axios";
 import { Registro } from "@/types/registro";
 import SubtrairButton from "./SubtrairButton";
@@ -165,9 +165,10 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
 
     //TESTES
 
+
     return (
         //Card do colaborador
-        <div className="flex flex-col p-4 5xl:p-2 justify-evenly w-[100%] bg-cinza-claro shadow-md shadow-gray-900 rounded-xl lg:w-[70%] lg:px-16">
+        <div className="motion-preset-slide-right flex flex-col p-4 5xl:p-2 justify-evenly w-[100%] bg-cinza-claro shadow-md shadow-gray-900 rounded-xl lg:w-[70%] lg:px-16">
 
             {/**Voltar*/}
             <button className=" w-8 h-8 flex justify-center items-center hover:cursor-pointer" onClick={() => voltar()}><SvgSetaVoltar /></button>

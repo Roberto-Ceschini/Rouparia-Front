@@ -21,7 +21,7 @@ export default function SubmitButton({ disable = false, name, setIsErrorVisible,
         // depois de 500ms remove do DOM
         const timeout = setTimeout(() => {
           setShowButton(false);
-        }, 500); // tempo igual ao da animação de saída
+        }, 300); // tempo igual ao da animação de saída
         return () => clearTimeout(timeout);
       } else {
         // se voltou a ficar ativo, mostra no DOM e tira a animação de saída
@@ -43,7 +43,7 @@ export default function SubmitButton({ disable = false, name, setIsErrorVisible,
             <button
               type="submit"
               disabled={disable}
-              className={`${isExiting ? 'motion-opacity-out-0' : 'motion-preset-slide-up'} bg-laranja py-1.5 rounded-md text-white font-semibold mt-6 hover:cursor-pointer hover:bg-laranja-hover disabled:bg-laranja-hover`}
+              className={`${isExiting ? 'motion-opacity-out-0' : 'motion-opacity-in-0'} bg-laranja py-1.5 rounded-md text-white font-semibold mt-6 hover:cursor-pointer hover:bg-laranja-hover disabled:bg-laranja-hover`}
               onClick={() => {
                 setIsErrorVisible(true);
                 handleShowError();
