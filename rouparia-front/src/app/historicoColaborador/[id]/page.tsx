@@ -1,12 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useParams} from "next/navigation";
+import { useParams } from "next/navigation";
 import api from "@/services/axios";
 import HeaderHistoricoColaborador from "@/components/HeaderHistoricoColaborador";
 import TabelaRegistros from "@/components/TabelaRegistros";
 import { ColaboradorSimples } from "@/types/colaboradorSimplificado";
 import { Registro } from "@/types/registro";
 import { useColaboradorContext } from "@/contexts/colaboradorContext";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 export default function HistoricoColaborador() {
   //Pegar dados da Url
@@ -19,12 +20,12 @@ export default function HistoricoColaborador() {
   const [paginaAtual, setPaginaAtual] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [nextPage, setNextPage] = useState<number | null>(null);
-  const [prevPage, setPrevPage] = useState<number | null> (null);
+  const [prevPage, setPrevPage] = useState<number | null>(null);
   const limite = 15;
 
   //Colaborador
   const [colaborador, setColaborador] = useState<ColaboradorSimples | null>(null);
-  const {colaborador_context} = useColaboradorContext();
+  const { colaborador_context } = useColaboradorContext();
 
   //TESTES 
   useEffect(() => {
@@ -32,8 +33,8 @@ export default function HistoricoColaborador() {
 
 
   //PAGINACAO
-  const mudarPagina = (pagina: number | null)=>{
-    if (pagina) setPaginaAtual (pagina);
+  const mudarPagina = (pagina: number | null) => {
+    if (pagina) setPaginaAtual(pagina);
     else return;
   }
 
@@ -68,7 +69,14 @@ export default function HistoricoColaborador() {
 
   // Aguarda o carregamento do colaborador antes de renderizar
   if (!colaborador) {
-    return <p>Carregando...</p>;
+    return <div className="flex w-[100vw] h-[100vh] justify-center items-center">
+      <DotLottieReact
+        src="\assets\animations\AnimBall.lottie"
+        loop
+        autoplay
+        style={{ width: '300px', height: '300px' }}
+      />
+    </div>
   }
 
   //Pagina principal
@@ -76,8 +84,8 @@ export default function HistoricoColaborador() {
     //Body
     <div className="flex flex-col w-[100vw] h-[100vh] items-center overflow-y-auto">
       {/**Header*/}
-      <HeaderHistoricoColaborador tipo="historico"/>
-  
+      <HeaderHistoricoColaborador tipo="historico" />
+
       {/**Tabela de Registros*/}
       <div className="mt-10 w-[100%] flex justify-center">
         <TabelaRegistros colaborador={colaborador} />
@@ -85,9 +93,9 @@ export default function HistoricoColaborador() {
 
       {/**Mudar de pagina */}
       <div className="flex flex-row mt-4 gap-4 pb-2">
-        <button className="font-bold cursor-pointer" onClick={()=>mudarPagina(prevPage)}>{'<'}</button>
+        <button className="font-bold cursor-pointer" onClick={() => mudarPagina(prevPage)}>{'<'}</button>
         <p>Página {paginaAtual} de {totalPages}</p>
-        <button className="font-bold cursor-pointer" onClick={()=>mudarPagina (nextPage)}>{'>'}</button>
+        <button className="font-bold cursor-pointer" onClick={() => mudarPagina(nextPage)}>{'>'}</button>
       </div>
     </div>
   );

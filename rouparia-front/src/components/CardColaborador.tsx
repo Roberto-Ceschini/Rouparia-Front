@@ -8,6 +8,7 @@ import SubtrairButton from "./SubtrairButton";
 import SomarButton from "./SomarButton";
 import { useRouter } from "next/navigation";
 import { useColaboradorContext } from "@/contexts/colaboradorContext";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 interface CardColaboradorProps {
     colaborador: Colaborador | null;
@@ -27,7 +28,7 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
 
     // Pegamos o último registro Válido desse colaborador
     const router = useRouter();
-    
+
     const ultimoRegistro: Registro | null = colaborador?.registros ?? null;
     //Estado que controla o envio do formulário
     const [submitting, setSubmitting] = useState(false);
@@ -59,6 +60,7 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
     const entregar = async () => {
 
         try {
+            setLoading(true)
             setBotaoClicado('entregar');
             setSubmitting(true);
             const response = await api.post('/registro', {
@@ -77,12 +79,15 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
             setSubmitting(false);
         } catch (error) {
             setSubmitting(false);
+        } finally {
+            setLoading(false)
         }
     }
 
     const entregaExtra = async () => {
 
         try {
+            setLoading(true)
             setBotaoClicado('entregar');
             setSubmitting(true);
             const response = await api.post('/registro', {
@@ -102,11 +107,14 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
         } catch (error) {
             setSubmitting(false);
             alert(error);
+        } finally {
+            setLoading(false)
         }
     }
 
     const retirar = async () => {
         try {
+            setLoading(true)
             setBotaoClicado('retirar');
             setSubmitting(true);
             const response = await api.post('/registro', {
@@ -120,12 +128,14 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
                 const errorCode = response.data.code
                 setMostrarPopUpNaoAutorizado(errorCode);
             } else {
+                setMostrarPopUpSucesso(true)
                 setSubmitting(false);
-                setMostrarPopUpSucesso(true);
             }
         } catch (error) {
             setSubmitting(false);
             alert(error);
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -133,9 +143,9 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
 
         setBotaoClicado('entregar e retirar');
         setSubmitting(true);
+        setLoading(true)
         try {
             await entregar();
-
         } catch (error) {
             alert(error)
         }
@@ -144,17 +154,21 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
             await retirar();
         } catch (error) {
             alert(error)
+        } finally {
+            setLoading(false)
         }
     }
 
-    const verHistorico = ()=>{
+    const verHistorico = () => {
+        setLoading(true);
         router.push(`/historicoColaborador/${colaborador?.id}`);
+        setLoading(false);
     }
 
-    const {setColaboradorContext} = useColaboradorContext();
+    const { setColaboradorContext } = useColaboradorContext();
 
-    const voltar = () =>{
-        setColaboradorContext ({
+    const voltar = () => {
+        setColaboradorContext({
             nome: null,
             numero: null,
             area: null,
@@ -165,6 +179,8 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
 
     //TESTES
 
+    //ANIMACOES
+    const [loading, setLoading] = useState<boolean>(false);
 
     return (
         //Card do colaborador
@@ -181,40 +197,50 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
                 {!ultimoRegistro
                     ? 'Usuario sem registro'
                     : capitalize(ultimoRegistro?.status) + ` ${ultimoRegistro.quantidade === 1 ?
-                     `${ultimoRegistro.quantidade} uniforme` : `${ultimoRegistro.quantidade} uniformes`}` 
-                     + ' em ' 
-                     + formatData(ultimoRegistro?.data)}
-                     </span></h2>
+                        `${ultimoRegistro.quantidade} uniforme` : `${ultimoRegistro.quantidade} uniformes`}`
+                    + ' em '
+                    + formatData(ultimoRegistro?.data)}
+            </span></h2>
 
             {/**Acoes*/}
             <div className="flex flex-col h-[30vh] justify-center gap-4">
-                <ServiceButton
-                    name='Entregar e retirar'
-                    color="laranja"
-                    textColor="white"
-                    hoverColor="laranja-hover"
-                    onClickFunction={entregarERetirar}
-                    submitting={submitting} />
-                <ServiceButton
-                    name='Entregar'
-                    textColor="white"
-                    hoverColor="verde-secundario-hover"
-                    onClickFunction={entregar}
-                    submitting={submitting} />
-                <ServiceButton
-                    name='Retirar'
-                    color="verde-terciario"
-                    textColor="white"
-                    hoverColor="verde-terciario-hover"
-                    onClickFunction={retirar}
-                    submitting={submitting} />
-                <ServiceButton
-                    name='Entrega extra'
-                    color="verde-primario"
-                    textColor="white"
-                    hoverColor="verde-terciario-hover"
-                    onClickFunction={entregaExtra}
-                    submitting={submitting} />
+                {!loading ? (
+                    <>
+                        <ServiceButton
+                            name='Entregar e retirar'
+                            color="laranja"
+                            textColor="white"
+                            hoverColor="laranja-hover"
+                            onClickFunction={entregarERetirar}
+                            submitting={submitting} />
+                        <ServiceButton
+                            name='Entregar'
+                            textColor="white"
+                            hoverColor="verde-secundario-hover"
+                            onClickFunction={entregar}
+                            submitting={submitting} />
+                        <ServiceButton
+                            name='Retirar'
+                            color="verde-terciario"
+                            textColor="white"
+                            hoverColor="verde-terciario-hover"
+                            onClickFunction={retirar}
+                            submitting={submitting} />
+                        <ServiceButton
+                            name='Entrega extra'
+                            color="verde-primario"
+                            textColor="white"
+                            hoverColor="verde-terciario-hover"
+                            onClickFunction={entregaExtra}
+                            submitting={submitting} />
+                    </>) : (
+                    <DotLottieReact
+                        src="assets/animations/MainLoad.lottie"
+                        backgroundColor="transparent"
+                        loop
+                        autoplay
+                    />
+                )}
             </div>
 
             {/*Selecionar quantidade entregue*/}
@@ -226,7 +252,7 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
                     <SomarButton onClick={somarEntrega} />
                 </div>
             </div>
-            
+
             {/*Selecionar quantidade Retirada*/}
             <div className="flex flex-row items-center font-semibold mt-1.5 mb-3 justify-between">
                 <p>Quantidade Retirada:</p>

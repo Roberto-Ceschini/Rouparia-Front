@@ -32,7 +32,7 @@ export default function SubmitButton({ disable = false, name, setIsErrorVisible,
 
     return (
         <>
-          {!showButton ? (
+          {disable ? (
             <DotLottieReact
               src="assets/animations/LoadingPng.lottie"
               backgroundColor="transparent"
