@@ -6,7 +6,7 @@ import { Colaborador } from "@/types/colaborador";
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 
-export default function cadastroColaborador(){
+export default function CadastroColaborador(){
 
     const [colaboradoresOriginais, setColaboradoresOriginais] = useState<Colaborador[] | []>([]);
     const [colaboradoresFiltrados, setColaboradoresFiltrados] = useState<Colaborador[] | []>([]); // Estado que controla os colaboradores

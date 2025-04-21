@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/authContext';
 import Image from 'next/image';
 
-export default function Home() {
+export default function Login() {
   const router = useRouter()
   const {login} = useAuth()//Importa o hook de autenticação
 
