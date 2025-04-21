@@ -80,7 +80,7 @@ export default function CadastrarAreaVinculo() {
       {/* Header */}
       <HeaderHistoricoColaborador tipo={tipo === 'area' ? 'gerenciamento areas' : 'gerenciamento vinculos'} />
 
-      <div className="border-2 w-[40vw] h-[8vh] mt-10 border-laranja-hover cursor-pointer items-center px-4 py-2 flex flex-row rounded-2xl">
+      <div className="border-2 w-[40vw] h-[5vh] mt-10 border-laranja-hover cursor-pointer items-center px-4 py-2 flex flex-row rounded-2xl">
         <input
           type="text"
           placeholder="Pesquisar"
