@@ -22,8 +22,14 @@ export default function cadastroColaborador(){
         }
       
         let filtradas = colaboradoresOriginais.filter((a) =>
-          a.nome.toLowerCase().includes(textoFormatado)
+            a.numero.toString().includes(textoFormatado)
         );
+
+        if (filtradas.length === 0) {
+            filtradas = colaboradoresOriginais.filter((a) =>
+                a.nome.toLowerCase().includes(textoFormatado)
+            );
+          }
       
         if (filtradas.length === 0) {
           filtradas = colaboradoresOriginais.filter((a) =>
