@@ -7,10 +7,26 @@ import SubmitButton from '@/components/SubmitButton';
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/authContext';
 import Image from 'next/image';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+
+
+// import React from 'react';
+// import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+
+// const App = () => {
+//   return (
+//     <DotLottieReact
+//       src="https://lottie.host/ffa41240-3599-435a-9079-26c6905052ad/LZUk1PYt2O.lottie"
+//       loop
+//       autoplay
+//     />
+//   );
+// };
+
 
 export default function Login() {
   const router = useRouter()
-  const {login} = useAuth()//Importa o hook de autenticação
+  const {login, loading} = useAuth()//Importa o hook de autenticação
 
   const [isErrorVisible, setIsErrorVisible] = useState(true);//Estado que controla a visibilidade do erro
 
@@ -68,7 +84,7 @@ export default function Login() {
                 isErrorVisible={isErrorVisible} 
                 />
               {/**Submit*/}
-             <SubmitButton name='Login' setIsErrorVisible={setIsErrorVisible} handleShowError ={handleShowError} />
+             <SubmitButton disable={loading} name='Login' setIsErrorVisible={setIsErrorVisible} handleShowError ={handleShowError} />
             </Form>
           </Formik>
         </div>

@@ -20,6 +20,7 @@ interface AuthContextType {
   login: (username: string, senha: string) => Promise<void>;
   logout: () => void;
   role: string | null;
+  loading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -27,6 +28,7 @@ const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 export const AuthProvider = ({ children }: any) => {
   const [token, setToken] = useState<string | null>(null);
   const [role, setRole] = useState<string | null>(null);
+  const [loading, setLoading] = useState <boolean>(false);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -66,6 +68,7 @@ export const AuthProvider = ({ children }: any) => {
 
   const login = async (username: string, senha: string) => {
     try {
+      setLoading(true);
       const response = await api.post("/auth/login", {
         username: username,
         password: senha,
@@ -77,6 +80,8 @@ export const AuthProvider = ({ children }: any) => {
     } catch (error) {
       console.error("Erro ao fazer login:", error); // Log do err
       alert("Falha ao fazer login. Verifique suas credenciais.");
+    } finally{
+      setLoading(false);
     }
   };
 
@@ -86,7 +91,7 @@ export const AuthProvider = ({ children }: any) => {
   };
 
   return (
-    <AuthContext.Provider value={{ token, login, logout, role }}>
+    <AuthContext.Provider value={{ loading, token, login, logout, role }}>
       {children}
     </AuthContext.Provider>
   );
