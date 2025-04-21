@@ -1,7 +1,7 @@
 "use client";
-import { ColaboradorSimples } from "@/types/colaboradorSimplificado";
+
 import { Pencil, PlusIcon, Trash } from "lucide-react";
-import { use, useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import PopUpExcluir from "./PopUpExcluir";
 import { Colaborador } from "@/types/colaborador";
 import PopUpCadastrarColaborador from "./popUpCadastrarColaborador";

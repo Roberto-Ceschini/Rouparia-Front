@@ -1,7 +1,6 @@
 "use client";
 
 import { ColaboradorSimples } from "@/types/colaboradorSimplificado";
-import LinhaTabela from "./ColunaTabela";
 import ColunaTabela from "./ColunaTabela";
 
 interface TabelaRegistrosProps {

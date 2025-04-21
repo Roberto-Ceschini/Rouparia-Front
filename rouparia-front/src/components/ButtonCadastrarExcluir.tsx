@@ -1,5 +1,4 @@
-import { FileChartColumnIncreasingIcon, Settings, User } from "lucide-react";
-import SvgUsuarioIcon from "./SvgUsuarioIcon";
+import {  Settings} from "lucide-react";
 
 interface props {
     onClick: () => void;

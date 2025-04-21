@@ -1,7 +1,6 @@
 "use client";
 import FormInput from "@/components/FormInput";
 import FormInputSelect from "@/components/FormInputSelect";
-import HeaderHistoricoColaborador from "@/components/HeaderHistoricoColaborador";
 import SubmitButton from "@/components/SubmitButton";
 import api from "@/services/axios";
 import { Area } from "@/types/area";
@@ -9,7 +8,7 @@ import { Colaborador } from "@/types/colaborador";
 import { Vinculo } from "@/types/vinculo";
 import { Form, Formik } from "formik";
 import { X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import * as Yup from "yup";
 
 interface Props {

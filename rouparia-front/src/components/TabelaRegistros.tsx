@@ -1,8 +1,6 @@
 "use client";
 
-import { Colaborador } from "@/types/colaborador"; // ajuste o caminho conforme sua estrutura
 import { Registro } from "@/types/registro"; // ajuste o caminho conforme sua estrutura
-import LinhaTabela from "./ColunaTabela";
 import ColunaTabela from "./ColunaTabela";
 import { ColaboradorSimples } from "@/types/colaboradorSimplificado";
 

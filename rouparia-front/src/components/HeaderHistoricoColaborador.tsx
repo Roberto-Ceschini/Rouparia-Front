@@ -3,10 +3,7 @@ import Link from "next/link";
 import SairButton from "./SairButton";
 import SvgSetaVoltarBranca from "./SvgSetaVoltarBranca";
 import { useRouter } from "next/navigation";
-import { useColaboradorContext } from "@/contexts/colaboradorContext";
-import SvgUsuarioIcon from "./SvgUsuarioIcon";
 import ButtonCadastrarExcluir from "./ButtonCadastrarExcluir";
-import { text } from "stream/consumers";
 import { useState } from "react";
 import { useAuth } from "@/contexts/authContext";
 

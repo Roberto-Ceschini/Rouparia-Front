@@ -1,13 +1,9 @@
 import { Colaborador } from "@/types/colaborador";
 import ServiceButton from "./ServiceButton";
 import SvgSetaVoltar from "./SvgSetaVoltar";
-import Link from "next/link";
-import { use, useEffect, useState } from "react";
+import { useState } from "react";
 import api from "@/services/axios";
-import path from "path";
 import { Registro } from "@/types/registro";
-import SvgButtonPlus from "./SvgButtonPlus";
-import SvgButtonMenos from "./SvgButtonMenos";
 import SubtrairButton from "./SubtrairButton";
 import SomarButton from "./SomarButton";
 import { useRouter } from "next/navigation";

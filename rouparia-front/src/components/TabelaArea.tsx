@@ -4,7 +4,7 @@ import api from "@/services/axios";
 import { Pencil, PlusIcon, Trash } from "lucide-react";
 import { Area } from "@/types/area";
 import { Vinculo } from "@/types/vinculo";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PopUpCadastrarArea from "./popUpCadastrarArea";
 
 interface TabelaAreasProps {

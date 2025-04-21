@@ -1,6 +1,4 @@
 import { Colaborador } from "@/types/colaborador";
-import SvgSucesso from "./SvgSucesso";
-import { useEffect } from "react";
 import api from "@/services/axios";
 import SvgInterrogacao from "./SvgInterrogacao";
 

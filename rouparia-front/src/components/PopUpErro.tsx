@@ -1,6 +1,5 @@
 import { Colaborador } from "@/types/colaborador";
 import SvgSucesso from "./SvgSucesso";
-import { useEffect } from "react";
 
 interface PopUpSucessoProps {
     handleTogglePopUp: () => void;
