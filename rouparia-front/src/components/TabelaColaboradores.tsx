@@ -39,7 +39,24 @@ export default function TabelaColaboradores({
   };
   if (!colaboradores || colaboradores.length === 0) {
     return (
-      <p className="text-center text-gray-500">Nenhum colaborador cadastrado</p>
+      <>
+        {isModalAdicionarOpen && (
+          <PopUpCadastrarColaborador
+            tipo={tipo}
+            handleTogglePopUp={() => setIsModalAdicionarOpen(false)}
+            colaborador={colaborador ? colaborador : null}
+            lastNumber={lastNumber}
+          />
+        )}
+        <button
+          onClick={() => onAdicionar()}
+          className="ml-2 text-verde-primario flex flex-row hover:text-verde-primario-hover cursor-pointer"
+          title="Adicionar"
+        >
+          Nenhum colaborador cadastrado
+          <PlusIcon size={20} />
+        </button>
+      </>
     );
   }
 
@@ -51,7 +68,7 @@ export default function TabelaColaboradores({
           colaborador={colaborador}
         />
       )}
-  
+
       {isModalAdicionarOpen && (
         <PopUpCadastrarColaborador
           tipo={tipo}
@@ -60,7 +77,7 @@ export default function TabelaColaboradores({
           lastNumber={lastNumber}
         />
       )}
-  
+
       {/* Versão Desktop */}
       <table className="hidden lg:table w-[90vw]">
         <thead className="sticky top-[10vh] xl:top-[9.2vh] text-left">
@@ -115,7 +132,7 @@ export default function TabelaColaboradores({
           ))}
         </tbody>
       </table>
-  
+
       {/* Versão Mobile */}
       <div className="lg:hidden space-y-4 w-[90vw] mx-auto overflow-y-auto">
         <div className="flex justify-between items-center">
@@ -128,7 +145,7 @@ export default function TabelaColaboradores({
             <PlusIcon size={24} />
           </button>
         </div>
-  
+
         {colaboradores.map((colaborador) => (
           <div
             key={colaborador.numero}
@@ -137,13 +154,13 @@ export default function TabelaColaboradores({
             <p className="font-poppins-semiBold text-base text-[#188038] mb-2">
               {String(colaborador.numero).padStart(3, "0")} - {colaborador.nome}
             </p>
-  
+
             <div className="text-sm space-y-1 mb-2">
               <div><strong>Área:</strong> {colaborador.area?.nome || "N/A"}</div>
               <div><strong>Vínculo:</strong> {colaborador.vinculo?.nome || "N/A"}</div>
               <div><strong>Pendências:</strong> {colaborador.qtd_pendente}</div>
             </div>
-  
+
             <div className="flex gap-3">
               <button
                 onClick={() => onEditar(colaborador)}

@@ -9,7 +9,7 @@ export default function SubmitButton({ name, setIsErrorVisible, handleShowError 
     return (
         <button
          type="submit" 
-         className='bg-laranja py-1.5 rounded-md text-white font-semibold mt-6 hover:cursor-pointer hover:bg-laranja-hover'
+         className='bg-laranja py-1.5 rounded-md text-white font-semibold mt-6 hover:cursor-pointer hover:bg-laranja-hover disabled:bg-laranja-hover'
          onClick={()=>{
             setIsErrorVisible(true)
             handleShowError()

@@ -2,9 +2,10 @@
 "use client";
 import { createContext, use, useContext, useEffect, useState } from "react";
 import axios from "axios";
-import api from "@/services/axios";
+
 import { usePathname, useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
+import api from "@/services/axios";
 
 interface JwtPayload {
   id: string;
