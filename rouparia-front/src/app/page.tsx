@@ -21,6 +21,7 @@ export default function Home() {
   //Pega o numero do colaborador via context (Pagina de historicos)
   const {setColaboradorContext, colaborador_context} = useColaboradorContext();
   const {token} = useAuth()
+  const [loading, setLoading] = useState<boolean>(false)
 
   const [colaborador, setColaborador] = useState<Colaborador | null>(null);//Estado que controla o colaborador
 
@@ -51,6 +52,7 @@ export default function Home() {
   //Função que busca o colaborador pelo número
   const fetchColaborador = async (nColaborador: number) => {
     setNColaborador(nColaborador);
+    setLoading(true);
     try {
       const response = await api.get(`colaborador/numero/${nColaborador}`);
       if (response) {
@@ -65,6 +67,8 @@ export default function Home() {
       }
     } catch (error) {
       setMostrarPopUpNaoEncontrado(true);
+    }finally{
+      setLoading(false)
     }
   }
 
@@ -151,7 +155,7 @@ export default function Home() {
                   />
 
                   {/**Submit*/}
-                  <SubmitButton name='Pesquisar' setIsErrorVisible={setIsErrorVisible} handleShowError={handleShowError} />
+                  <SubmitButton disable={loading} name='Pesquisar' setIsErrorVisible={setIsErrorVisible} handleShowError={handleShowError} />
                 </Form>
               </Formik>
             </div></>

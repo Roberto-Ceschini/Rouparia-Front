@@ -1,3 +1,6 @@
+@import "tailwindcss";
+@plugin "tailwindcss-motion";
+
 @font-face{
     font-family: Poppins-Regular;
     src: url("/assets/fonts/Poppins-Regular.ttf");
@@ -14,7 +17,7 @@
     font-family: Poppins-ExtraBold;
     src: url("/assets/fonts/Poppins-ExtraBold.ttf");
 }
-@import "tailwindcss";
+
 
 @theme{
     --font-poppins-regular: Poppins-Regular, "sans-serif";
