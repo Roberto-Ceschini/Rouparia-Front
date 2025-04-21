@@ -1,20 +1,18 @@
 "use client"
-import ButtonCadastrarExcluir from "@/components/ButtonCadastrarExcluir";
+
 import CardColaborador from "@/components/CardColaborador";
 import FormInput from "@/components/FormInput";
 import HeaderHistoricoColaborador from "@/components/HeaderHistoricoColaborador";
 import PopUpNaoAutorizado from "@/components/PopNaoAutorizado";
 import PopUpSucesso from "@/components/PopUpSucesso";
 import PopUpUsuarioNaoEncontrado from "@/components/PopUpUsuarioNaoEncontrado";
-import SairButton from "@/components/SairButton";
 import SubmitButton from "@/components/SubmitButton";
 import { useAuth } from "@/contexts/authContext";
 import { useColaboradorContext } from "@/contexts/colaboradorContext";
 import api from "@/services/axios";
 import { Colaborador } from "@/types/colaborador";
 import { Form, Formik } from "formik";
-import Link from "next/link";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import * as Yup from 'yup';
 

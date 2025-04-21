@@ -4,7 +4,7 @@ import TabelaColaboradores from "@/components/TabelaColaboradores";
 import api from "@/services/axios";
 import { Colaborador } from "@/types/colaborador";
 import { Search } from "lucide-react";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function cadastroColaborador(){
 

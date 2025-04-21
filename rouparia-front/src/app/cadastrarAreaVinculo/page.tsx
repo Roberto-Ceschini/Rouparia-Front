@@ -1,12 +1,10 @@
 "use client";
 import HeaderHistoricoColaborador from "@/components/HeaderHistoricoColaborador";
 import api from "@/services/axios";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import TabelaAreas from "@/components/TabelaArea";
 import { Area } from "@/types/area";
-import PopUpCadastrarArea from "@/components/popUpCadastrarArea";
 import { useSearchParams } from "next/navigation";
-import { text } from "stream/consumers";
 import { Search } from "lucide-react";
 
 export default function CadastrarAreaVinculo() {
