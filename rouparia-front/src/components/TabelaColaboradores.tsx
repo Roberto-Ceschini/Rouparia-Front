@@ -63,14 +63,14 @@ export default function TabelaColaboradores({
   
       {/* Versão Desktop */}
       <table className="hidden lg:table w-[90vw]">
-        <thead className="sticky top-[10vh] text-left">
+        <thead className="sticky top-[10vh] xl:top-[9.2vh] text-left">
           <tr className="bg-[#F2F2F2] shadow-md rounded-l-xl rounded-r-xl">
-            <th className="px-4 py-3 font-poppins-semiBold">Número</th>
-            <th className="px-4 py-3 font-poppins-semiBold">Nome</th>
-            <th className="px-4 py-3 font-poppins-semiBold">Área</th>
-            <th className="px-4 py-3 font-poppins-semiBold">Vínculo</th>
-            <th className="px-4 py-3 font-poppins-semiBold">Pendências</th>
-            <th className="px-4 py-3 font-poppins-semiBold">
+            <th className="px-4 py-2 font-poppins-semiBold">Número</th>
+            <th className="px-4 py-2 font-poppins-semiBold">Nome</th>
+            <th className="px-4 py-2 font-poppins-semiBold">Área</th>
+            <th className="px-4 py-2 font-poppins-semiBold">Vínculo</th>
+            <th className="px-4 py-2 font-poppins-semiBold">Pendências</th>
+            <th className="px-4 py-2 font-poppins-semiBold">
               Ações
               <button
                 onClick={() => onAdicionar()}

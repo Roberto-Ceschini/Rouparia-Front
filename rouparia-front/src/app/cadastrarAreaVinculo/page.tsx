@@ -6,15 +6,34 @@ import TabelaAreas from "@/components/TabelaArea";
 import { Area } from "@/types/area";
 import PopUpCadastrarArea from "@/components/popUpCadastrarArea";
 import { useSearchParams } from "next/navigation";
+import { text } from "stream/consumers";
+import { Search } from "lucide-react";
 
 export default function CadastrarAreaVinculo() {
   //------------VARIAVEIS----------
-  const [areas, setAreas] = useState<[] | Area[]>([]); // Áreas que serão exibidas no dropDown
+  const [areasOriginais, setAreasOriginais] = useState<[] | Area[]>([]); // Áreas que serão exibidas no dropDown
+  const [areasFiltradas, setAreasFiltradas] = useState<[] | Area[]>([]);
 
-  const useParams= useSearchParams();
+  const useParams = useSearchParams();
   const tipo = useParams.get('tipo');
 
-  // Função para mostrar o erro por 4 segundos
+  const [textoBusca, setTextoBusca] = useState("");
+
+  const pesquisar = (texto: string) => {
+    const textoFormatado = texto.toLowerCase();
+
+    if (textoFormatado.trim() === "") {
+      setAreasFiltradas(areasOriginais); // Aqui você deve ter salvo as áreas originais em algum lugar
+      return;
+    }
+
+    const filtradas = areasOriginais.filter((a) =>
+      a.nome.toLowerCase().includes(textoFormatado)
+    );
+
+    setAreasFiltradas(filtradas);
+  };
+
 
   const fetchAreas = async () => {
     try {
@@ -26,7 +45,7 @@ export default function CadastrarAreaVinculo() {
   }
 
   const fetchVinculos = async () => {
-    try { 
+    try {
       const response = await api.get("/vinculo");
       if (response.data) return response.data;
     }
@@ -39,13 +58,19 @@ export default function CadastrarAreaVinculo() {
     const carregarDados = async () => {
       if (tipo === 'area') {
         const areasData = await fetchAreas();
-        if (areasData) setAreas(areasData);
+        if (areasData) {
+          setAreasOriginais(areasData)
+          setAreasFiltradas(areasData);
+        };
       }
       else if (tipo === 'vinculo') {
-      const areasData = await fetchVinculos();
-      if (areasData) setAreas(areasData);
-    };
-  }
+        const areasData = await fetchVinculos();
+        if (areasData) {
+          setAreasOriginais(areasData)
+          setAreasFiltradas(areasData);
+        };
+      };
+    }
 
     carregarDados()
   }, []);
@@ -55,10 +80,25 @@ export default function CadastrarAreaVinculo() {
       {/* Header */}
       <HeaderHistoricoColaborador tipo={tipo === 'area' ? 'gerenciamento areas' : 'gerenciamento vinculos'} />
 
+      <div className="border-2 w-[40vw] h-[8vh] mt-10 border-laranja-hover cursor-pointer items-center px-4 py-2 flex flex-row rounded-2xl">
+        <input
+          type="text"
+          placeholder="Pesquisar"
+          className="w-full h-full outline-none border-none text-base"
+          value={textoBusca}
+          onChange={(e) => {
+            const novoTexto = e.target.value;
+            setTextoBusca(novoTexto);
+            pesquisar(novoTexto);
+          }}
+        />
+        <Search />
+      </div>
+
       {/* Conteúdo principal */}
       <div className="mt-10 flex justify-center">
-          <TabelaAreas areas={areas} tipo={tipo}/>
-        </div>
+        <TabelaAreas areas={areasFiltradas} tipo={tipo} />
       </div>
+    </div>
   );
 }

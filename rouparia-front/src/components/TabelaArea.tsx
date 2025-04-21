@@ -68,11 +68,11 @@ export default function TabelaAreas({ areas, tipo }: TabelaAreasProps) {
   return (
     <>
     {(isModalOpen && operacao) && <PopUpCadastrarArea setIsModalOpen={setIsModalOpen} operacao={operacao} areaVinculo={areaVinculo}/>}
-    <table className="hidden lg:table w-[45vw]">
-        <thead className="sticky top-[10vh] text-left">
+    <table className=" w-[80vw] overflow-y-hidden">
+        <thead className="text-left sticky top-[10vh] xl:top-[9.2vh]">
           <tr className="bg-[#F2F2F2] shadow-md rounded-l-xl rounded-r-xl">
-          <th className="px-4 py-3 font-poppins-semiBold">{tipo === 'area' ? 'Nome da Área' : 'Nome do Vínculo'}</th>
-          <th className="px-4 py-3 font-poppins-semiBold">
+          <th className="px-4 py-2 font-poppins-semiBold">{tipo === 'area' ? 'Nome da Área' : 'Nome do Vínculo'}</th>
+          <th className="px-4 py-2 font-poppins-semiBold">
             Ações
             <button
             onClick={() => onCadastrar()}
