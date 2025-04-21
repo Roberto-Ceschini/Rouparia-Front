@@ -37,6 +37,8 @@ export default function TabelaColaboradores({
     setTipo("cadastrar");
     return;
   };
+
+
   if (!colaboradores || colaboradores.length === 0) {
     return (
       <>

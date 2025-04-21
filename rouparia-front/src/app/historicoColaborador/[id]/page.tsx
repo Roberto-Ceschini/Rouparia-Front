@@ -27,10 +27,10 @@ export default function HistoricoColaborador() {
   const [colaborador, setColaborador] = useState<ColaboradorSimples | null>(null);
   const { colaborador_context } = useColaboradorContext();
 
-  //TESTES 
-  useEffect(() => {
-  }, [colaborador_context]);
+   //--------------ANIMCAO--------------
+   const [loading, setLoading] = useState(false);
 
+  //TESTES 
 
   //PAGINACAO
   const mudarPagina = (pagina: number | null) => {
@@ -42,6 +42,7 @@ export default function HistoricoColaborador() {
   // Função para carregar o colaborador a partir do id
   const fecthRegistros = async () => {
     try {
+      setLoading(true)
       const response = await api.get(`/colaborador/registros/${id}?page=${paginaAtual}&limit=${limite}`);
       if (response.data) {
         const colaborador = {
@@ -59,6 +60,8 @@ export default function HistoricoColaborador() {
       }
     } catch (error) {
       alert("Erro ao buscar registro! Tente novamente mais tarde")
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -86,10 +89,20 @@ export default function HistoricoColaborador() {
       {/**Header*/}
       <HeaderHistoricoColaborador tipo="historico" />
 
-      {/**Tabela de Registros*/}
+      {loading ? (
+        <div className="flex items-center justify-center w-[100vw] h-[100vh]">
+         <DotLottieReact
+         src="\assets\animations\AnimBall.lottie"
+         loop
+         autoplay
+         style={{ width: '300px', height: '300px' }}
+     />
+     </div>
+      ): (
       <div className="mt-10 w-[100%] flex justify-center">
         <TabelaRegistros colaborador={colaborador} />
       </div>
+    )}
 
       {/**Mudar de pagina */}
       <div className="flex flex-row mt-4 gap-4 pb-2">

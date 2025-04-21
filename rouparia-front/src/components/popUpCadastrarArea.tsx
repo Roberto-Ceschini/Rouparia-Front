@@ -100,7 +100,7 @@ export default function PopUpCadastrarArea({setIsModalOpen, operacao, areaVincul
   
     return(
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-        <div className="bg-white rounded-xl shadow-lg p-6 w-[90vw] max-w-md relative">
+        <div className="motion-preset-pop bg-white rounded-xl shadow-lg p-6 w-[90vw] max-w-md relative">
           {/* Botão de fechar */}
           <button
             className="absolute top-4 right-4 text-gray-500 hover:text-red-500 cursor-pointer"

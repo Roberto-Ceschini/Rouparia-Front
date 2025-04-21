@@ -14,7 +14,7 @@ export default function PopUpErro({ handleTogglePopUp, colaborador, botaoClicado
 
         <div className="absolute z-10 inset-0 bg-black/50 flex justify-center items-center">
             {/**PopUp de usuário não encontrado*/}
-            <div className="bg-white w-[80%] rounded-md flex flex-col items-center shadow-lg">
+            <div className="motion-preset-pop bg-white w-[80%] rounded-md flex flex-col items-center shadow-lg">
                 <div className="flex flex-col items-center p-4">
                     <SvgSucesso />
                     <p className="text-lg font-poppins-semiBold">{String(colaborador?.numero).padStart(3, '0')} - {colaborador?.nome}</p>

@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @plugin "tailwindcss-motion";
+@plugin "tailwindcss-intersect";
 
 @font-face{
     font-family: Poppins-Regular;

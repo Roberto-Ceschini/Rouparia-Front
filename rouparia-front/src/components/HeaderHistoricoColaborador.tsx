@@ -89,7 +89,7 @@ export default function HeaderHistoricoColaborador({ tipo }: props) {
   if (role === null) {
     return (
       <div className="flex w-full h-[10vh] bg-verde-primario justify-center items-center">
-        <h1 className="text-cinza-claro text-2xl font-bold">Carregando...</h1>
+        <h1 className="text-cinza-claro text-lg font-bold">Carregando...</h1>
       </div>
     );
   }
@@ -98,7 +98,7 @@ export default function HeaderHistoricoColaborador({ tipo }: props) {
     <>
       {/* Cabeçalho principal */}
       <div
-        className={`flex sticky top-0 flex-row justify-between py-6 px-3 lg:px-8 items-center w-full h-[10vh] bg-verde-primario`}
+        className={`motion-preset-slide-down z-10 flex sticky top-0 flex-row justify-between py-6 px-3 lg:px-8 items-center w-full h-[10vh] bg-verde-primario`}
       >
         {/* Parte esquerda (voltar + título) */}
         <div className="flex flex-row justify-around">
@@ -123,7 +123,7 @@ export default function HeaderHistoricoColaborador({ tipo }: props) {
         >
           {menuAberto ? (
             <svg
-              className="w-8 h-8"
+              className="motion-opacity-in-0 w-8 h-8"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -137,7 +137,7 @@ export default function HeaderHistoricoColaborador({ tipo }: props) {
             </svg>
           ) : (
             <svg
-              className="w-8 h-8"
+              className="motion-opacity-in-0 w-8 h-8"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -173,7 +173,7 @@ export default function HeaderHistoricoColaborador({ tipo }: props) {
 
       {/* Menu Mobile (aparece quando aberto) */}
       {menuAberto && (
-        <div className="lg:hidden fixed top-[10vh] right-0 w-full bg-verde-primario shadow-lg z-50 p-4">
+        <div className="motion-preset-slide-down lg:hidden fixed top-[10vh] right-0 w-full bg-verde-primario shadow-lg z-50 p-4">
           <div className="flex flex-col space-y-4">
             <>
               {role === "admin" && (

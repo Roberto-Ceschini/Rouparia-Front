@@ -160,9 +160,7 @@ export default function CardColaborador({ colaborador, setMostrarPopUpNaoAutoriz
     }
 
     const verHistorico = () => {
-        setLoading(true);
         router.push(`/historicoColaborador/${colaborador?.id}`);
-        setLoading(false);
     }
 
     const { setColaboradorContext } = useColaboradorContext();

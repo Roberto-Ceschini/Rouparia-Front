@@ -35,9 +35,10 @@ export default function SubmitButton({ disable = false, name, setIsErrorVisible,
           {disable ? (
             <DotLottieReact
               src="assets/animations/LoadingPng.lottie"
-              backgroundColor="transparent"
+              className='self-center'
               loop
               autoplay
+              style={{ width: '150px', height: '150px' }}
             />
           ) : (
             <button
